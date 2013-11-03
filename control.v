@@ -11,10 +11,8 @@ module control(OpCode,Cond, Flag, ALUOp, WriteEn, MemEnab, MemWrite, Signal);
   output reg [10:0] Signal;
   
   integer N,V,Z;
-  integer BS;// branch successful or not
+  integer BS = 2;// branch successful or not
   
-  
-
   
   always @(OpCode or Cond or Flag)
   begin
@@ -23,7 +21,6 @@ module control(OpCode,Cond, Flag, ALUOp, WriteEn, MemEnab, MemWrite, Signal);
     V = Flag[1];
     Z = Flag[0];
     
-     
    case (OpCode)
      
       // ADD
@@ -93,6 +90,7 @@ module control(OpCode,Cond, Flag, ALUOp, WriteEn, MemEnab, MemWrite, Signal);
       //LW         
       4'b1000: begin
                Signal   = 11'b00010010110;
+               ALUOp    = 3'b000;
                WriteEn  = 1'b1;
                MemEnab  = 1'b1;
                MemWrite = 1'b0;
@@ -100,6 +98,7 @@ module control(OpCode,Cond, Flag, ALUOp, WriteEn, MemEnab, MemWrite, Signal);
       //SW         
       4'b1001: begin
                Signal   = 11'b00010010110;
+               ALUOp    = 3'b000;
                WriteEn  = 1'b0;
                MemEnab  = 1'b1;
                MemWrite = 1'b1;
@@ -114,6 +113,7 @@ module control(OpCode,Cond, Flag, ALUOp, WriteEn, MemEnab, MemWrite, Signal);
       //LLB         
       4'b1011: begin
                Signal   = 11'b00000000000;
+               ALUOp    = 3'b010;
                WriteEn  = 1'b1;
                MemEnab  = 1'b0;
                MemWrite = 1'b0;
@@ -125,8 +125,8 @@ module control(OpCode,Cond, Flag, ALUOp, WriteEn, MemEnab, MemWrite, Signal);
       4'b1100: begin
                case(Cond)
       
-                 3'b000:  BS =( Z == 1)? 1'b1:1'b0; //Equal
-                 3'b001:  BS = ( Z == 0)? 1'b1:1'b0; //Not Equal
+                 3'b000:  BS = (Z == 1)? 1'b1:1'b0; //Equal
+                 3'b001:  BS = (Z == 0)? 1'b1:1'b0; //Not Equal
                  3'b010:  BS = (Z == 0 && N == 0)? 1'b1:1'b0; // Greater Than
                  3'b011:  BS = (N == 1)? 1'b1:1'b0; // Less Than      
                  3'b100:  BS = (Z==1||(Z == 0 && N == 0))? 1'b1:1'b0; //Greater ot Equal        
@@ -166,7 +166,7 @@ module control(OpCode,Cond, Flag, ALUOp, WriteEn, MemEnab, MemWrite, Signal);
       WriteEn  = 1'b0;
       MemEnab  = 1'b0;
       MemWrite = 1'b0;
-    end else begin
+    end else if (BS == 0) begin
       Signal   = 11'b00000110000;
       WriteEn  = 1'b0;
       MemEnab  = 1'b0;
