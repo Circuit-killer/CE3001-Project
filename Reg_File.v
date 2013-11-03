@@ -1,14 +1,13 @@
 `include "define.v"
 
-module Reg_File(RAddr1,RAddr2,WAddr,WData,Wen,Clock,Reset,RData1,RData2);
-                
-  input [`RSIZE - 1:0]      RAddr1, RAddr2, WAddr;
-  input [`DSIZE - 1:0]      WData;
-  input                     Wen, Clock, Reset;
-  output reg [`DSIZE -1 :0] RData1, RData2;              
-                
-  reg [`DSIZE - 1:0]        regFile [0:15];
-  integer                   i;
+module Reg_File(
+                input [`RSIZE - 1:0]      RAddr1, RAddr2, WAddr,
+                input [`DSIZE - 1:0]      WData,
+                input                     Wen, Clock, Reset,
+                output [`DSIZE -1 :0]     RData1, RData2
+                );
+  reg [`DSIZE - 1:0]                      regFile [0:15];
+  integer                                 i;
   
   /*
   always @(!Reset) begin
@@ -52,8 +51,10 @@ module Reg_File(RAddr1,RAddr2,WAddr,WData,Wen,Clock,Reset,RData1,RData2);
   // bypass writing
   // assign RData1 = RegFile[RAddr1];
   // assign RData2 = RegFile[RAddr2];
-  assign RData1 = ((WAddr == RAddr1) && (WAddr != 0) && WAddr != 15) ? WData : regFile[RAddr1];
-  assign RData2 = ((WAddr == RAddr2) && (WAddr != 0) && WAddr != 15) ? WData : regFile[RAddr2];
+  //assign RData1 = ((WAddr == RAddr1) && (WAddr != 0) && (WAddr != 15)) ? WData : regFile[RAddr1];
+  //assign RData2 = ((WAddr == RAddr2) && (WAddr != 0) && (WAddr != 15)) ? WData : regFile[RAddr2];
+  assign RData1 = ((WAddr != 0) && (WAddr != 15)) ? WData : regFile[RAddr1];
+  assign RData2 = ((WAddr != 0) && (WAddr != 15)) ? WData : regFile[RAddr2];
   //R0 is constant 0
   //R15 is PC|Address register
 endmodule // Reg_File

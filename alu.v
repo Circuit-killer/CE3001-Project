@@ -1,17 +1,18 @@
 `include "define.v"
 
 module alu(
-           input signed [`DSIZE - 1:0] A, B;
-           input [2:0]                 op;
-           input [3:0]                 imm;
-           input                       clk;
-           output reg [`DSIZE - 1:0]   out;
-           output reg [2:0]            flag;
+           input signed [`DSIZE - 1:0] A, B,
+           input [2:0]                 op,
+           input [2:0]                 lastFlag,
+           input [3:0]                 imm,
+           input                       clk,
+           output [`DSIZE - 1:0]       out,
+           output [2:0]                flag
            );
   
   wire                                 z, v, n;
   reg [`DSIZE - 1:0]                   tmpOut;
-
+  
   assign z = (tmpOut == 16'b0) ? 1 : 0;
   assign v = ((op == `ADD && ~(A[15] ^ B[15]) && (A[15] ^ tmpOut[15])) 
               || (op == `SUB && (A[15] ^ B[15]) && (A[15] ^ tmpOut[15]))) ? 1 : 0;
@@ -27,14 +28,17 @@ module alu(
       `SRL: tmpOut = A >> imm;
       `SRA: tmpOut = A >>> imm;
       `RL: tmpOut = {A << imm | A >> (16 - imm)};
-      default: out = 16'd0;
+      default: tmpOut = 16'd0;
     endcase
   end
-  
+  /*
   always @(posedge clk) begin
     out <= tmpOut;
     flag[0] <= z;
     flag[1] <= v;
     flag[2] <= n;
   end
+   */
+  assign out = tmpOut;
+  assign flag = (op < 4) ? {n, v, z} : lastFlag;
 endmodule // alu
