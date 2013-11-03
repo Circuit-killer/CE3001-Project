@@ -65,6 +65,7 @@ module CPU(Clk, Rst);
   //Module Instantiation
   /**********Instruction Fectch**********/
   I_memory A0(.address(MuxOut[9]), .data_out(IF_Buff[0]), .Clk(Clk), .Rst(Rst));
+  PC A1(.Clk(Clk), .Rst(Rst), .NextPC(IF_Buff[1]), .CurrPC(MuxOut[9]));
   
   /**********Instruction Decode**********/
   control A2(.OpCode(IF_Buff[0][15:12]), .Cond(IF_Buff[0][3:0]), .Flag(EX_Buff[9]), .ALUOp(ID_Buff[2]), .WriteEn(ID_Buff[3][13]), .MemEnab(ID_Buff[3][11]), .MemWrite(ID_Buff[3][12]), .Signal(ID_Buff[3][10:0]));
