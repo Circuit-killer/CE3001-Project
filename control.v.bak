@@ -1,4 +1,4 @@
-module control(OpCode,Cond, Flag, ALUOp, WriteEn, MemEnab, MemWrite, Signal);
+module control(OpCode, Cond, Flag, ALUOp, WriteEn, MemEnab, MemWrite, Signal);
 
   //declare input and output signal
   input [3:0] OpCode;
@@ -10,20 +10,19 @@ module control(OpCode,Cond, Flag, ALUOp, WriteEn, MemEnab, MemWrite, Signal);
   output reg [2:0] ALUOp;
   output reg [10:0] Signal;
   
-  integer N,V,Z;
+  wire N,V,Z;
   integer BS = 2;// branch successful or not
   
+  assign N = Flag[2];
+  assign V = Flag[1];
+  assign Z = Flag[0];
   
   always @(OpCode or Cond or Flag)
   begin
     
-    N = Flag[2];
-    V = Flag[1];
-    Z = Flag[0];
-    
    case (OpCode)
      
-      // ADD
+      //ADD
       4'b0000: begin
                Signal   = 11'b00000110110;
                ALUOp    = 3'b000;
@@ -113,6 +112,7 @@ module control(OpCode,Cond, Flag, ALUOp, WriteEn, MemEnab, MemWrite, Signal);
       //LLB         
       4'b1011: begin
                Signal   = 11'b00000000000;
+               ALUOp    = 3'b010;
                WriteEn  = 1'b1;
                MemEnab  = 1'b0;
                MemWrite = 1'b0;

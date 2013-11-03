@@ -1,11 +1,4 @@
-C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/Reg_File.v {1 {vlog -work work C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/Reg_File.v
-Model Technology ModelSim PE Student Edition vlog 10.2c Compiler 2013.07 Jul 18 2013
--- Compiling module Reg_File
-
-Top level modules:
-	Reg_File
-
-} {} {}} C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/control.v {2 {vlog -work work C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/control.v
+C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/control.v {2 {vlog -work work C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/control.v
 Model Technology ModelSim PE Student Edition vlog 10.2c Compiler 2013.07 Jul 18 2013
 -- Compiling module control
 ** Warning: C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/control.v(68): (vlog-2600) [RDGN] - Redundant digits in numeric literal.
@@ -13,6 +6,13 @@ Model Technology ModelSim PE Student Edition vlog 10.2c Compiler 2013.07 Jul 18 
 
 Top level modules:
 	control
+
+} {} {}} C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/Reg_File.v {1 {vlog -work work C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/Reg_File.v
+Model Technology ModelSim PE Student Edition vlog 10.2c Compiler 2013.07 Jul 18 2013
+-- Compiling module Reg_File
+
+Top level modules:
+	Reg_File
 
 } {} {}} C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/mem/D_memory.v {1 {vlog -work work C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/mem/D_memory.v
 Model Technology ModelSim PE Student Edition vlog 10.2c Compiler 2013.07 Jul 18 2013
@@ -44,5 +44,12 @@ Top level modules:
 
 } {} {}} C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/define.v {1 {vlog -work work C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/define.v
 Model Technology ModelSim PE Student Edition vlog 10.2c Compiler 2013.07 Jul 18 2013
+
+} {} {}} C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/CPU.v {1 {vlog -work work C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/CPU.v
+Model Technology ModelSim PE Student Edition vlog 10.2c Compiler 2013.07 Jul 18 2013
+-- Compiling module CPU
+
+Top level modules:
+	CPU
 
 } {} {}}

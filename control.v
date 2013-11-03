@@ -1,4 +1,4 @@
-module control(OpCode,Cond, Flag, ALUOp, WriteEn, MemEnab, MemWrite, Signal);
+module control(OpCode, Cond, Flag, ALUOp, WriteEn, MemEnab, MemWrite, Signal);
 
   //declare input and output signal
   input [3:0] OpCode;
@@ -23,7 +23,7 @@ module control(OpCode,Cond, Flag, ALUOp, WriteEn, MemEnab, MemWrite, Signal);
     
    case (OpCode)
      
-      // ADD
+      //ADD
       4'b0000: begin
                Signal   = 11'b00000110110;
                ALUOp    = 3'b000;
