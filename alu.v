@@ -6,8 +6,8 @@ module alu(
            input [2:0]                 lastFlag,
            input [3:0]                 imm,
            input                       clk,
-           output [`DSIZE - 1:0]       out,
-           output [2:0]                flag
+           output reg [`DSIZE - 1:0]   out,
+           output reg [2:0]            flag
            );
   
   wire                                 z, v, n;
