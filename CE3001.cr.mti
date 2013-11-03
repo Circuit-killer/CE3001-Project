@@ -1,46 +1,41 @@
-C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/Reg_File.v {0 {vlog -work work C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/Reg_File.v
+C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/control.v {2 {vlog -work work C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/control.v
+Model Technology ModelSim PE Student Edition vlog 10.2c Compiler 2013.07 Jul 18 2013
+-- Compiling module control
+** Warning: C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/control.v(71): (vlog-2600) [RDGN] - Redundant digits in numeric literal.
+
+
+Top level modules:
+	control
+
+} {} {}} C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/Reg_File.v {1 {vlog -work work C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/Reg_File.v
 Model Technology ModelSim PE Student Edition vlog 10.2c Compiler 2013.07 Jul 18 2013
 -- Compiling module Reg_File
-** Error: C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/Reg_File.v(55): Register is illegal in left-hand side of continuous assignment
-** Error: C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/Reg_File.v(56): Register is illegal in left-hand side of continuous assignment
 
-} {4.0 6.0} {}} C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/mem/D_memory.v {0 {vlog -work work C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/mem/D_memory.v
-Model Technology ModelSim PE Student Edition vlog 10.2c Compiler 2013.07 Jul 18 2013
--- Compiling module D_memory
-** Error: C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/mem/D_memory.v(4): (vlog-2163) Macro `MEM_SPACE is undefined.
+Top level modules:
+	Reg_File
 
-** Error: C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/mem/D_memory.v(11): (vlog-2163) Macro `MEM_SPACE is undefined.
-
-** Error: C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/mem/D_memory.v(11): near "]": syntax error, unexpected ']'
-** Error: C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/mem/D_memory.v(12): (vlog-2163) Macro `MAX_LINE_LENGTH is undefined.
-
-** Error: C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/mem/D_memory.v(12): near ":": syntax error, unexpected ':'
-** Error: C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/mem/D_memory.v(36): (vlog-2163) Macro `MEM_SPACE is undefined.
-
-** Error: C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/mem/D_memory.v(36): near ";": syntax error, unexpected ';'
-** Error: C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/mem/D_memory.v(36): near ")": syntax error, unexpected ')', expecting ';'
-** Error: C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/mem/D_memory.v(41): near "else": syntax error, unexpected else
-
-} {4.0 5.0 6.0 7.0 8.0 10.0 11.0 13.0 14.0 17.0} {}} C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/alu.v {0 {vlog -work work C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/alu.v
+} {} {}} C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/alu.v {1 {vlog -work work C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/alu.v
 Model Technology ModelSim PE Student Edition vlog 10.2c Compiler 2013.07 Jul 18 2013
 -- Compiling module alu
-** Error: C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/alu.v(4): near ";": syntax error, unexpected ';', expecting ')'
 
-} {4.0 5.0} {}} C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/mem/I_memory.v {0 {vlog -work work C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/mem/I_memory.v
+Top level modules:
+	alu
+
+} {} {}} C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/mem/D_memory.v {1 {vlog -work work C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/mem/D_memory.v
+Model Technology ModelSim PE Student Edition vlog 10.2c Compiler 2013.07 Jul 18 2013
+-- Compiling module D_memory
+
+Top level modules:
+	D_memory
+
+} {} {}} C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/define.v {1 {vlog -work work C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/define.v
+Model Technology ModelSim PE Student Edition vlog 10.2c Compiler 2013.07 Jul 18 2013
+
+} {} {}} C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/mem/I_memory.v {1 {vlog -work work C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/mem/I_memory.v
 Model Technology ModelSim PE Student Edition vlog 10.2c Compiler 2013.07 Jul 18 2013
 -- Compiling module I_memory
-** Error: C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/mem/I_memory.v(4): (vlog-2163) Macro `MEM_SPACE is undefined.
 
-** Error: C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/mem/I_memory.v(9): (vlog-2163) Macro `MEM_SPACE is undefined.
+Top level modules:
+	I_memory
 
-** Error: C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/mem/I_memory.v(9): near "]": syntax error, unexpected ']'
-** Error: C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/mem/I_memory.v(10): (vlog-2163) Macro `MAX_LINE_LENGTH is undefined.
-
-** Error: C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/mem/I_memory.v(10): near ":": syntax error, unexpected ':'
-** Error: C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/mem/I_memory.v(34): (vlog-2163) Macro `MEM_SPACE is undefined.
-
-** Error: C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/mem/I_memory.v(34): near ";": syntax error, unexpected ';'
-** Error: C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/mem/I_memory.v(34): near ")": syntax error, unexpected ')', expecting ';'
-** Error: C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/mem/I_memory.v(39): near "else": syntax error, unexpected else
-
-} {4.0 5.0 6.0 7.0 8.0 10.0 11.0 13.0 14.0 17.0} {}}
+} {} {}}

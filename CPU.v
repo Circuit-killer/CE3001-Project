@@ -1,5 +1,3 @@
-`include "I_memory.v"
-
 module CPU(Clk, Rst);
   
   input Clk, Rst;
@@ -30,7 +28,9 @@ module CPU(Clk, Rst);
   11	     MemData_out	16
   =====Write Back=====
 ******************************************/
-
+  
+  integer i;
+  
   reg [15:0] IF_Buff [0:15];
   reg [15:0] ID_Buff [0:15];
   reg [15:0] EX_Buff [0:15];
@@ -67,7 +67,8 @@ module CPU(Clk, Rst);
   I_memory A0(.address(MuxOut[9]), .data_out(IF_Buff[0]), .Clk(Clk), .Rst(Rst));
   
   /**********Instruction Decode**********/
-  Reg_File A2(.RAddr1(IF_Buff[0][7:4]), .RAddr2(MuxOut[8]), .WAddr(MuxOut[3]), .WData(MuxOut[7]), .Wen(MEM_Buff[3][13]), .Clock(Clk), .Reset(Rst), .RData1(ID_Buff[4]), .RData2(ID_Buff[5]));
+  control A2(.OpCode(IF_Buff[0][15:12]), .Cond(IF_Buff[0][3:0]), .Flag(EX_Buff[9]), .ALUOp(ID_Buff[2]), .WriteEn(ID_Buff[3][13]), .MemEnab(ID_Buff[3][11]), .MemWrite(ID_Buff[3][12]), .Signal(ID_Buff[3][10:0]));
+  Reg_File A3(.RAddr1(IF_Buff[0][7:4]), .RAddr2(MuxOut[8]), .WAddr(MuxOut[3]), .WData(MuxOut[7]), .Wen(MEM_Buff[3][13]), .Clock(Clk), .Reset(Rst), .RData1(ID_Buff[4]), .RData2(ID_Buff[5]));
   
   always@(posedge Clk) begin
     ID_Buff[6] <= IF_Buff[0][7:0];    // should be 2's complement
@@ -79,18 +80,27 @@ module CPU(Clk, Rst);
     EX_Buff[8] <= MuxOut[5];
   end
   
-  alu A3(.A(MuxOut[4]), .B(MuxOut[5]), .lastFlag(EX_Buff[9]), .imm(ID_Buff[0][3:0]), .clk(Clk), .out(EX_Buff[10]), .flag(EX_Buff[9]));
+  alu A4(.A(MuxOut[4]), .B(MuxOut[5]), .lastFlag(EX_Buff[9]), .imm(ID_Buff[0][3:0]), .clk(Clk), .out(EX_Buff[10]), .flag(EX_Buff[9]));
   
   /**********Memory Access************/
-  D_memory A4(.address(EX_Buff[10]), .data_in(EX_Buff[8]), .data_out(MEM_Buff[11]), .clk(Clk), .rst(Rst), .write_en(EX_Buff[3][12]));
+  D_memory A5(.address(EX_Buff[10]), .data_in(EX_Buff[8]), .data_out(MEM_Buff[11]), .clk(Clk), .rst(Rst), .write_en(EX_Buff[3][12]));
   
   always@(posedge Clk) begin
   
-  // Active low Rst will trigger PC and RF flushing
+  // IF -> ID
   
+  for (i = 0; i <= 1; i = i+1)
+    ID_Buff[i] <= IF_Buff[i];
   
+  // ID -> EX
   
+  for (i = 0; i <= 7; i = i+1)
+    EX_Buff[i] <=  ID_Buff[i];
   
+  // EX -> MEM
+  
+  for (i = 0; i <= 10; i = i+1)
+    MEM_Buff[i] <=  EX_Buff[i];
   
   end  
   
