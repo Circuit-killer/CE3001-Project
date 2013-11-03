@@ -1,65 +1,18 @@
 C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/Reg_File.v {0 {vlog -work work C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/Reg_File.v
 Model Technology ModelSim PE Student Edition vlog 10.2c Compiler 2013.07 Jul 18 2013
 -- Compiling module Reg_File
-** Error: C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/Reg_File.v(2): (vlog-2163) Macro `RSIZE is undefined.
+** Error: C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/Reg_File.v(55): Register is illegal in left-hand side of continuous assignment
+** Error: C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/Reg_File.v(56): Register is illegal in left-hand side of continuous assignment
 
-** Error: C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/Reg_File.v(2): near ";": syntax error, unexpected ';', expecting ')'
-** Error: C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/Reg_File.v(3): (vlog-2163) Macro `DSIZE is undefined.
-
-** Error: C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/Reg_File.v(5): (vlog-2163) Macro `DSIZE is undefined.
-
-** Error: C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/Reg_File.v(7): (vlog-2163) Macro `DSIZE is undefined.
-
-
-} {4.0 5.0 6.0 8.0 9.0 10.0 11.0 12.0} {}} C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/alu.v {0 {vlog -work work C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/alu.v
+} {4.0 6.0} {}} C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/alu.v {0 {vlog -work work C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/alu.v
 Model Technology ModelSim PE Student Edition vlog 10.2c Compiler 2013.07 Jul 18 2013
-** Error: C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/alu.v(1): Cannot find `include file "define.v" in directories:
-    C:/Modeltech_pe_edu_10.2c/ovm-2.1.2/../verilog_src/ovm-2.1.2/src, C:/Modeltech_pe_edu_10.2c/uvm-1.1d/../verilog_src/uvm-1.1d/src
 -- Compiling module alu
-** Error: C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/alu.v(4): (vlog-2163) Macro `DSIZE is undefined.
-
 ** Error: C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/alu.v(4): near ";": syntax error, unexpected ';', expecting ')'
-** Error: C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/alu.v(8): (vlog-2163) Macro `DSIZE is undefined.
 
-** Error: C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/alu.v(13): (vlog-2163) Macro `DSIZE is undefined.
-
-** Error: C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/alu.v(16): (vlog-2163) Macro `ADD is undefined.
-
-** Error: C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/alu.v(17): (vlog-2163) Macro `SUB is undefined.
-
-** Error: C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/alu.v(18): (vlog-2163) Macro `ADD is undefined.
-
-** Error: C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/alu.v(18): (vlog-2163) Macro `SUB is undefined.
-
-** Error: C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/alu.v(22): (vlog-2163) Macro `ADD is undefined.
-
-** Error: C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/alu.v(23): (vlog-2163) Macro `SUB is undefined.
-
-** Error: C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/alu.v(24): (vlog-2163) Macro `AND is undefined.
-
-** Error: C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/alu.v(25): (vlog-2163) Macro `OR is undefined.
-
-** Error: C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/alu.v(26): (vlog-2163) Macro `SLL is undefined.
-
-** Error: C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/alu.v(27): (vlog-2163) Macro `SRL is undefined.
-
-** Error: C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/alu.v(28): (vlog-2163) Macro `SRA is undefined.
-
-** Error: C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/alu.v(29): (vlog-2163) Macro `RL is undefined.
-
-
-} {3.0 4.0 6.0 7.0 8.0 10.0 11.0 12.0 13.0 14.0 15.0 16.0 17.0 18.0 19.0 20.0 21.0 22.0 23.0 24.0 25.0 26.0 27.0 28.0 29.0 30.0 31.0 32.0 33.0 34.0 35.0 36.0} {}} C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/mem/D_memory.v {0 {vlog -work work C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/mem/D_memory.v
+} {4.0 5.0} {}} C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/mem/D_memory.v {0 {vlog -work work C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/mem/D_memory.v
 Model Technology ModelSim PE Student Edition vlog 10.2c Compiler 2013.07 Jul 18 2013
-** Error: C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/mem/D_memory.v(1): Cannot find `include file "define.v" in directories:
-    C:/Modeltech_pe_edu_10.2c/ovm-2.1.2/../verilog_src/ovm-2.1.2/src, C:/Modeltech_pe_edu_10.2c/uvm-1.1d/../verilog_src/uvm-1.1d/src
 -- Compiling module D_memory
 ** Error: C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/mem/D_memory.v(4): (vlog-2163) Macro `MEM_SPACE is undefined.
-
-** Error: C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/mem/D_memory.v(5): (vlog-2163) Macro `DSIZE is undefined.
-
-** Error: C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/mem/D_memory.v(6): (vlog-2163) Macro `DSIZE is undefined.
-
-** Error: C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/mem/D_memory.v(11): (vlog-2163) Macro `DSIZE is undefined.
 
 ** Error: C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/mem/D_memory.v(11): (vlog-2163) Macro `MEM_SPACE is undefined.
 
@@ -73,16 +26,10 @@ Model Technology ModelSim PE Student Edition vlog 10.2c Compiler 2013.07 Jul 18 
 ** Error: C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/mem/D_memory.v(36): near ")": syntax error, unexpected ')', expecting ';'
 ** Error: C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/mem/D_memory.v(41): near "else": syntax error, unexpected else
 
-} {3.0 4.0 6.0 7.0 8.0 9.0 10.0 11.0 12.0 13.0 14.0 15.0 16.0 18.0 19.0 21.0 22.0 25.0} {}} C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/mem/I_memory.v {0 {vlog -work work C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/mem/I_memory.v
+} {4.0 5.0 6.0 7.0 8.0 10.0 11.0 13.0 14.0 17.0} {}} C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/mem/I_memory.v {0 {vlog -work work C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/mem/I_memory.v
 Model Technology ModelSim PE Student Edition vlog 10.2c Compiler 2013.07 Jul 18 2013
-** Error: C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/mem/I_memory.v(1): Cannot find `include file "define.v" in directories:
-    C:/Modeltech_pe_edu_10.2c/ovm-2.1.2/../verilog_src/ovm-2.1.2/src, C:/Modeltech_pe_edu_10.2c/uvm-1.1d/../verilog_src/uvm-1.1d/src
 -- Compiling module I_memory
 ** Error: C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/mem/I_memory.v(4): (vlog-2163) Macro `MEM_SPACE is undefined.
-
-** Error: C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/mem/I_memory.v(5): (vlog-2163) Macro `ISIZE is undefined.
-
-** Error: C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/mem/I_memory.v(9): (vlog-2163) Macro `ISIZE is undefined.
 
 ** Error: C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/mem/I_memory.v(9): (vlog-2163) Macro `MEM_SPACE is undefined.
 
@@ -96,4 +43,4 @@ Model Technology ModelSim PE Student Edition vlog 10.2c Compiler 2013.07 Jul 18 
 ** Error: C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/mem/I_memory.v(34): near ")": syntax error, unexpected ')', expecting ';'
 ** Error: C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/mem/I_memory.v(39): near "else": syntax error, unexpected else
 
-} {3.0 4.0 6.0 7.0 8.0 9.0 10.0 11.0 12.0 13.0 14.0 16.0 17.0 19.0 20.0 23.0} {}}
+} {4.0 5.0 6.0 7.0 8.0 10.0 11.0 13.0 14.0 17.0} {}}
