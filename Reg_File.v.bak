@@ -45,7 +45,7 @@ module Reg_File(RAddr1,RAddr2,WAddr,WData,Wen,Clock,Reset,RData1,RData2);
       regFile[14]  <= 0;
       regFile[15]  <= 0;
     end else begin 
-        regFile[WAddr] <= ((Wen == 1) && (WAddr != 0)) ? WData : regFile[WAddr];
+        RegFile[WAddr] <= ((Wen == 1) && (WAddr != 0)) ? WData : regFile[WAddr];
     end // else: !if(!Reset)
   end
 

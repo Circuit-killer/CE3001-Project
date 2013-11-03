@@ -1,0 +1,8 @@
+module CPU(Clk, Rst);
+  
+  input Clk, Rst;
+  
+  
+  
+endmodule
+            
