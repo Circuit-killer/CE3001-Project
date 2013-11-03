@@ -31,14 +31,16 @@ module alu(
       default: tmpOut = 16'd0;
     endcase
   end
-  /*
   always @(posedge clk) begin
     out <= tmpOut;
-    flag[0] <= z;
-    flag[1] <= v;
-    flag[2] <= n;
+    if (op < 4) begin
+      flag[0] <= z;
+      flag[1] <= v;
+      flag[2] <= n;
+    end else begin
+      flag <= lastFlag;
+    end
   end
-   */
-  assign out = tmpOut;
-  assign flag = (op < 4) ? {n, v, z} : lastFlag;
+  //assign out = tmpOut;
+  //assign flag = (op < 4) ? {n, v, z} : lastFlag;
 endmodule // alu
