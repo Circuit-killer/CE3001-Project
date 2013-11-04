@@ -14,6 +14,10 @@ module I_memory(
     begin
       if(!rst)
         begin
+          
+          //NOP Instruction
+          data_out <= 16'd0;
+          
           addr_inc = 0;
           I_init = $fopen("I_memory_init.txt","r");
           
