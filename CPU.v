@@ -108,10 +108,13 @@ module CPU(Clk, Rst);
   PC A1(.Clk(Clk), .Rst(Rst), .CurrPC(MuxOut[9]), .NextPC(IF_Buff_1_wire));
   
   /**********Instruction Decode**********/
-  control A2(.OpCode(IF_Buff_0_wire[15:12]), .Cond(IF_Buff_0_wire[3:0]), .Flag(EX_Buff_9_wire), .ALUOp(ID_Buff_2_wire), 
-             .WriteEn(ID_Buff_3_wire[13]), .MemEnab(ID_Buff_3_wire[11]), .MemWrite(ID_Buff_3_wire[12]), .Signal(ID_Buff_3_wire[10:0]));
-  Reg_File A3(.RAddr1(IF_Buff_0_wire[7:4]), .RAddr2(MuxOut[8]), .WAddr(MuxOut[3]), .WData(MuxOut[7]), .Wen(MEM_Buff_3_wire[13]), 
-             .Clock(Clk), .Reset(Rst), .RData1(ID_Buff_4_wire), .RData2(ID_Buff_5_wire));
+  control A2(.OpCode(IF_Buff_0_wire[15:12]), .Cond(IF_Buff_0_wire[3:0]), .Flag(EX_Buff_9_wire), 
+             .ALUOp(ID_Buff_2_wire), .WriteEn(ID_Buff_3_wire[13]), .MemEnab(ID_Buff_3_wire[11]), 
+             .MemWrite(ID_Buff_3_wire[12]), .Signal(ID_Buff_3_wire[10:0]));
+             
+  Reg_File A3(.RAddr1(IF_Buff_0_wire[7:4]), .RAddr2(MuxOut[8]), .WAddr(MuxOut[3]), 
+              .WData(MuxOut[7]), .Wen(MEM_Buff_3_wire[13]), .Clock(Clk), .Reset(Rst), 
+              .RData1(ID_Buff_4_wire), .RData2(ID_Buff_5_wire));
   
   always@(posedge Clk) begin
     ID_Buff[6] <= IF_Buff_0_wire[7:0];    // should be 2's complement
@@ -123,10 +126,12 @@ module CPU(Clk, Rst);
     EX_Buff[8] <= MuxOut[5];
   end
   
-  alu A4(.A(MuxOut[4]), .B(MuxOut[5]), .lastFlag(EX_Buff_9_wire), .imm(ID_Buff_0_wire[3:0]), .clk(Clk), .out(EX_Buff_10_wire), .flag(EX_Buff_9_wire));
+  alu A4(.A(MuxOut[4]), .B(MuxOut[5]), .op(ID_Buff[3]), .lastFlag(EX_Buff_9_wire), 
+         .imm(ID_Buff_0_wire[3:0]), .clk(Clk), .out(EX_Buff_10_wire), .flag(EX_Buff_9_wire));
   
   /**********Memory Access************/
-  D_memory A5(.address(EX_Buff_10_wire), .data_in(EX_Buff_8_wire), .data_out(MEM_Buff_11_wire), .clk(Clk), .rst(Rst), .write_en(EX_Buff_3_wire[12]));
+  D_memory A5(.address(EX_Buff_10_wire), .data_in(EX_Buff_8_wire), .data_out(MEM_Buff_11_wire), 
+              .clk(Clk), .rst(Rst), .write_en(EX_Buff_3_wire[12]));
   
   always@(posedge Clk) begin
   
