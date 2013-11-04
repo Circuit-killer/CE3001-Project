@@ -108,10 +108,13 @@ module CPU(Clk, Rst);
   PC A1(.Clk(Clk), .Rst(Rst), .CurrPC(MuxOut[9]), .NextPC(IF_Buff_1_wire));
   
   /**********Instruction Decode**********/
-  control A2(.OpCode(IF_Buff_0_wire[15:12]), .Cond(IF_Buff_0_wire[3:0]), .Flag(EX_Buff_9_wire), .ALUOp(ID_Buff_2_wire), 
-             .WriteEn(ID_Buff_3_wire[13]), .MemEnab(ID_Buff_3_wire[11]), .MemWrite(ID_Buff_3_wire[12]), .Signal(ID_Buff_3_wire[10:0]));
-  Reg_File A3(.RAddr1(IF_Buff_0_wire[7:4]), .RAddr2(MuxOut[8]), .WAddr(MuxOut[3]), .WData(MuxOut[7]), .Wen(MEM_Buff_3_wire[13]), 
-             .Clock(Clk), .Reset(Rst), .RData1(ID_Buff_4_wire), .RData2(ID_Buff_5_wire));
+  control A2(.OpCode(IF_Buff_0_wire[15:12]), .Cond(IF_Buff_0_wire[3:0]), .Flag(EX_Buff_9_wire), 
+             .ALUOp(ID_Buff_2_wire), .WriteEn(ID_Buff_3_wire[13]), .MemEnab(ID_Buff_3_wire[11]), 
+             .MemWrite(ID_Buff_3_wire[12]), .Signal(ID_Buff_3_wire[10:0]));
+             
+  Reg_File A3(.RAddr1(IF_Buff_0_wire[7:4]), .RAddr2(MuxOut[8]), .WAddr(MuxOut[3]), 
+              .WData(MuxOut[7]), .Wen(MEM_Buff_3_wire[13]), .Clock(Clk), .Reset(Rst), 
+              .RData1(ID_Buff_4_wire), .RData2(ID_Buff_5_wire));
   
   always@(posedge Clk) begin
     ID_Buff[6] <= IF_Buff_0_wire[7:0];    // should be 2's complement
@@ -132,31 +135,40 @@ module CPU(Clk, Rst);
   
   always@(posedge Clk) begin
   
+  if (!Rst) begin
+    
+    for (i = 0; i <= 15; i = i+1) begin
+      ID_Buff[i] <= 16'd0;
+      EX_Buff[i] <= 16'd0;
+      MEM_Buff[i] <= 16'd0;
+    end
+  end else begin
   // IF -> ID
   
-  ID_Buff[0] <= IF_Buff_0_wire;
-  ID_Buff[1] <= IF_Buff_1_wire;
+    ID_Buff[0] <= IF_Buff_0_wire;
+    ID_Buff[1] <= IF_Buff_1_wire;
   
   // ID -> EX
   
-  for (i = 0; i <= 3; i = i+1)
-    EX_Buff[i] <=  ID_Buff[i];
+    for (i = 0; i <= 3; i = i+1)
+      EX_Buff[i] <=  ID_Buff[i];
     
-  EX_Buff[4] <= ID_Buff_4_wire;
-  EX_Buff[5] <= ID_Buff_5_wire;
+    EX_Buff[4] <= ID_Buff_4_wire;
+    EX_Buff[5] <= ID_Buff_5_wire;
   
-  for (i = 6; i <= 7; i = i+1)
-    EX_Buff[i] <=  ID_Buff[i];
+    for (i = 6; i <= 7; i = i+1)
+      EX_Buff[i] <=  ID_Buff[i];
   
   // EX -> MEM
   
-  for (i = 0; i <= 8; i = i+1)
-    MEM_Buff[i] <=  EX_Buff[i];
+    for (i = 0; i <= 8; i = i+1)
+      MEM_Buff[i] <=  EX_Buff[i];
     
-  MEM_Buff[9] <= EX_Buff_9_wire;
-  MEM_Buff[10] <= EX_Buff_10_wire;
+    MEM_Buff[9] <= EX_Buff_9_wire;
+    MEM_Buff[10] <= EX_Buff_10_wire;
   
-  end  
+    end
+  end
   
 endmodule
             

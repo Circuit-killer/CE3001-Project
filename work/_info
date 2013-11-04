@@ -9,212 +9,212 @@ Z0 dC:/Modeltech_pe_edu_10.2c/examples
 !i10e 25
 !i10f 100
 valu
-Z1 !s100 ^dO^?HMNEL]iCh>kQP;>]3
-Z2 I>il]^97VB6CFDNEg^>a3>3
-Z3 V`JN@9S9cnhjKRR_L]QIcM3
-Z4 dC:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project
-Z5 w1383557613
-Z6 8C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/alu.v
-Z7 FC:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/alu.v
+Z1 !s110 1383568889
+Z2 !s100 ^dO^?HMNEL]iCh>kQP;>]3
+Z3 I>il]^97VB6CFDNEg^>a3>3
+Z4 V`JN@9S9cnhjKRR_L]QIcM3
+Z5 dC:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project
+Z6 w1383557613
+Z7 8C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/alu.v
+Z8 FC:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/alu.v
 L0 3
-Z8 OP;L;10.2c;57
+Z9 OP;L;10.2c;57
 r1
 31
-Z9 !s90 -reportprogress|300|-work|work|C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/alu.v|
-Z10 o-work work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF -O0
-Z11 !s110 1383558595
-Z12 !s108 1383558594.979000
+Z10 !s90 -reportprogress|300|-work|work|C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/alu.v|
+Z11 o-work work -L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF -O0
+Z12 !s108 1383568889.946000
 Z13 !s107 define.v|C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/alu.v|
 !i10b 1
 !s85 0
 !s101 -O0
 vcontrol
-R11
-Z14 !s100 GjU^jDUoKa`I5>WN09`0I1
-Z15 I;V:[Kdge5lVSQ37oh6`2S3
-R3
+Z14 !s110 1383568890
+Z15 !s100 GjU^jDUoKa`I5>WN09`0I1
+Z16 I;V:[Kdge5lVSQ37oh6`2S3
 R4
 R5
-Z16 8C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/control.v
-Z17 FC:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/control.v
+R6
+Z17 8C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/control.v
+Z18 FC:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/control.v
 L0 1
-R8
+R9
 r1
 31
-Z18 !s90 -reportprogress|300|-work|work|C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/control.v|
-R10
-Z19 !s108 1383558595.194000
-Z20 !s107 C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/control.v|
+Z19 !s90 -reportprogress|300|-work|work|C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/control.v|
+R11
+Z20 !s108 1383568890.173000
+Z21 !s107 C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/control.v|
 !i10b 1
 !s85 0
 !s101 -O0
 vCPU
-R11
-Z21 !s100 1XggVD^XoD=Lc<6L=mk>g0
-Z22 IjSjOF5W=jnK[=AfIcJQV]2
-R3
+Z22 Ida`[2ChfOJ?YVQE<8Xmlf3
 R4
-Z23 w1383558170
+R5
+Z23 w1383568886
 Z24 8C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/CPU.v
 Z25 FC:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/CPU.v
 L0 1
-R8
+R9
 r1
 31
 Z26 !s90 -reportprogress|300|-work|work|C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/CPU.v|
-R10
+R11
 Z27 n@c@p@u
-Z28 !s108 1383558595.059000
-Z29 !s107 C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/CPU.v|
+R14
+Z28 !s100 >8DhFnUNjI7K<T[NY172:0
+Z29 !s108 1383568890.022000
+Z30 !s107 C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/CPU.v|
 !i10b 1
 !s85 0
 !s101 -O0
 vCPU_tb
-R11
-Z30 !s100 1963J?imba_bfd<PUnEnV3
-Z31 I9oS]TBb4?d<lYhEojTEbf0
-R3
+R14
+Z31 !s100 1963J?imba_bfd<PUnEnV3
+Z32 I9oS]TBb4?d<lYhEojTEbf0
 R4
-Z32 w1383557957
-Z33 8C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/CPU_tb.v
-Z34 FC:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/CPU_tb.v
+R5
+Z33 w1383557957
+Z34 8C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/CPU_tb.v
+Z35 FC:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/CPU_tb.v
 L0 1
-R8
+R9
 r1
 31
-Z35 !s90 -reportprogress|300|-work|work|C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/CPU_tb.v|
-R10
-Z36 n@c@p@u_tb
-Z37 !s108 1383558595.498000
-Z38 !s107 C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/CPU_tb.v|
+Z36 !s90 -reportprogress|300|-work|work|C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/CPU_tb.v|
+R11
+Z37 n@c@p@u_tb
+Z38 !s108 1383568890.471000
+Z39 !s107 C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/CPU_tb.v|
 !i10b 1
 !s85 0
 !s101 -O0
 vD_memory
-R11
+R14
 !i10b 1
-Z39 !s100 Tz;lEUj8FFAI8ha09F@Za0
-IkQIVW60IkM1Gg^hTAhSU31
-R3
+Z40 !s100 o=zGR5Ch>=UVM[2?9KbHH1
+IHdNb;CRQ@DTmhlKWY3f?Y3
 R4
 R5
+Z41 w1383567860
 FD_memory.v
-Z40 8C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/D_memory_tb.v
-Z41 FC:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/D_memory_tb.v
+Z42 8C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/D_memory_tb.v
+Z43 FC:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/D_memory_tb.v
 L0 3
-R8
+R9
 r1
 !s85 0
 31
-Z42 !s108 1383558595.661000
-Z43 !s107 define.v|D_memory.v|C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/D_memory_tb.v|
-Z44 !s90 -reportprogress|300|-work|work|C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/D_memory_tb.v|
+Z44 !s108 1383568890.634000
+Z45 !s107 define.v|D_memory.v|C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/D_memory_tb.v|
+Z46 !s90 -reportprogress|300|-work|work|C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/D_memory_tb.v|
 !s101 -O0
-R10
-Z45 n@d_memory
-vD_memory_tb_file_io
 R11
+Z47 n@d_memory
+vD_memory_tb_file_io
+R14
 !i10b 1
-Z46 !s100 7`GVomMUKH=<C?T4Ji]E]3
-Z47 I7V^lnjdSn@WmfCc_7E97b3
-R3
+Z48 !s100 7`GVomMUKH=<C?T4Ji]E]3
+Z49 I7V^lnjdSn@WmfCc_7E97b3
 R4
-Z48 w1383007944
-R40
-R41
-L0 5
-R8
-r1
-!s85 0
-31
+R5
+Z50 w1383007944
 R42
 R43
+L0 5
+R9
+r1
+!s85 0
+31
 R44
+R45
+R46
 !s101 -O0
-R10
-Z49 n@d_memory_tb_file_io
-vI_memory
 R11
-Z50 !s100 Kd`eR]^ncIEM75LUgVOCb1
-Z51 I1nFiF][>YPSZMJO2jG;4>3
-R3
+Z51 n@d_memory_tb_file_io
+vI_memory
+R14
+Z52 !s100 D@mh4cPGHZe3`73`<V`FQ1
+Z53 IT8ge8lDJN@fFT2LJgIAMR3
 R4
 R5
-Z52 FI_memory.v
-Z53 8C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/I_memory_tb.v
-Z54 FC:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/I_memory_tb.v
+Z54 w1383567854
+Z55 FI_memory.v
+Z56 8C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/I_memory_tb.v
+Z57 FC:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/I_memory_tb.v
 L0 3
-R8
+R9
 r1
 31
-Z55 !s108 1383558595.575000
-Z56 !s107 define.v|I_memory.v|C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/I_memory_tb.v|
-Z57 !s90 -reportprogress|300|-work|work|C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/I_memory_tb.v|
-R10
-Z58 n@i_memory
+Z58 !s108 1383568890.548000
+Z59 !s107 define.v|I_memory.v|C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/I_memory_tb.v|
+Z60 !s90 -reportprogress|300|-work|work|C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/I_memory_tb.v|
+R11
+Z61 n@i_memory
 !i10b 1
 !s85 0
 !s101 -O0
 vI_memory_tb_file_io
-R11
-Z59 !s100 >97M7TBSWKIEgW:^gWZZU1
-Z60 IRO6R@k2f1im1W@<d`M9L_3
-R3
+R14
+Z62 !s100 ziF^TbJ^2NHJf0nz@?V561
+Z63 IYCmf3PT_YA4_SeHoV5nhC1
 R4
-R48
-R53
-R54
-L0 5
-R8
-r1
-31
-R55
+R5
+Z64 w1383567042
 R56
 R57
-R10
-Z61 n@i_memory_tb_file_io
+L0 5
+R9
+r1
+31
+R58
+R59
+R60
+R11
+Z65 n@i_memory_tb_file_io
 !i10b 1
 !s85 0
 !s101 -O0
 vPC
-R11
-Z62 !s100 AR8be9zSL01Y2=bFedXRK2
-Z63 ID5<VjFN;g;_:j<=1;_kH52
-R3
+R14
+Z66 !s100 MMbb0jo@h09TZPLhbGV_72
+Z67 IEifEb`Fh3Ohaah0fEdk@92
 R4
 R5
-Z64 8C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/PC.v
-Z65 FC:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/PC.v
-L0 1
-R8
+Z68 w1383565956
+Z69 8C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/PC.v
+Z70 FC:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/PC.v
+L0 3
+R9
 r1
 31
-Z66 !s90 -reportprogress|300|-work|work|C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/PC.v|
-R10
+Z71 !s90 -reportprogress|300|-work|work|C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/PC.v|
+R11
 n@p@c
-Z67 !s108 1383558595.272000
-Z68 !s107 C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/PC.v|
+Z72 !s108 1383568890.248000
+Z73 !s107 define.v|C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/PC.v|
 !i10b 1
 !s85 0
 !s101 -O0
 vReg_File
-Z69 !s100 _OoAWgTmTgge]QKG:Y0I<0
-Z70 I?8_^oW1YGh6j@[BiTeUS10
-R3
+Z74 !s100 _OoAWgTmTgge]QKG:Y0I<0
+Z75 I?8_^oW1YGh6j@[BiTeUS10
 R4
-Z71 w1383466356
-Z72 8C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/Reg_File.v
-Z73 FC:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/Reg_File.v
+R5
+Z76 w1383466356
+Z77 8C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/Reg_File.v
+Z78 FC:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/Reg_File.v
 L0 3
-R8
+R9
 r1
 31
-Z74 !s90 -reportprogress|300|-work|work|C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/Reg_File.v|
-R10
-Z75 n@reg_@file
-Z76 !s110 1383558594
-Z77 !s108 1383558594.902000
-Z78 !s107 define.v|C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/Reg_File.v|
+Z79 !s90 -reportprogress|300|-work|work|C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/Reg_File.v|
+R11
+Z80 n@reg_@file
+R1
+Z81 !s108 1383568889.872000
+Z82 !s107 define.v|C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/Reg_File.v|
 !i10b 1
 !s85 0
 !s101 -O0

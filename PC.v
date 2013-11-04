@@ -1,7 +1,9 @@
+`include "define.v"
+
 module PC(Clk, Rst, CurrPC, NextPC);
   
   //declare input and output signals
-  input [15:0] CurrPC;
+  input [`MEM_SPACE-1:0] CurrPC;
   input Clk, Rst;
   
   output reg [15:0] NextPC;

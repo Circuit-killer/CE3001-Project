@@ -24,9 +24,9 @@ initial
     rst = 0;
 #10 rst = 1;
 #10 rst = 0;
-#8  address = 0;
-#10 address = 1;
+#8  address = 1;
 #10 address = 2;
+#10 address = 3;
 
 #100 $stop;
   end

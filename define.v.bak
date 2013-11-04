@@ -5,7 +5,7 @@
  `define DSIZE 16
  `define RSIZE 4
  `define MEM_SPACE 16 //not sure
- `define MAX_LINE_LENGTH 80 //not sure
+ `define MAX_LINE_LENGTH 50 //not sure
 
  `define ADD 0
  `define SUB 1

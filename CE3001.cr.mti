@@ -1,26 +1,4 @@
-C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/D_memory_tb.v {1 {vlog -work work C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/D_memory_tb.v
-Model Technology ModelSim PE Student Edition vlog 10.2c Compiler 2013.07 Jul 18 2013
--- Compiling module D_memory
--- Compiling module D_memory_tb_file_io
-
-Top level modules:
-	D_memory_tb_file_io
-
-} {} {}} C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/Reg_File.v {1 {vlog -work work C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/Reg_File.v
-Model Technology ModelSim PE Student Edition vlog 10.2c Compiler 2013.07 Jul 18 2013
--- Compiling module Reg_File
-
-Top level modules:
-	Reg_File
-
-} {} {}} C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/control.v {1 {vlog -work work C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/control.v
-Model Technology ModelSim PE Student Edition vlog 10.2c Compiler 2013.07 Jul 18 2013
--- Compiling module control
-
-Top level modules:
-	control
-
-} {} {}} C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/I_memory.v {1 {vlog -work work C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/I_memory.v
+C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/I_memory.v {1 {vlog -work work C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/I_memory.v
 Model Technology ModelSim PE Student Edition vlog 10.2c Compiler 2013.07 Jul 18 2013
 -- Compiling module I_memory
 
@@ -33,6 +11,28 @@ Model Technology ModelSim PE Student Edition vlog 10.2c Compiler 2013.07 Jul 18 
 
 Top level modules:
 	CPU_tb
+
+} {} {}} C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/control.v {1 {vlog -work work C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/control.v
+Model Technology ModelSim PE Student Edition vlog 10.2c Compiler 2013.07 Jul 18 2013
+-- Compiling module control
+
+Top level modules:
+	control
+
+} {} {}} C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/Reg_File.v {1 {vlog -work work C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/Reg_File.v
+Model Technology ModelSim PE Student Edition vlog 10.2c Compiler 2013.07 Jul 18 2013
+-- Compiling module Reg_File
+
+Top level modules:
+	Reg_File
+
+} {} {}} C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/D_memory_tb.v {1 {vlog -work work C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/D_memory_tb.v
+Model Technology ModelSim PE Student Edition vlog 10.2c Compiler 2013.07 Jul 18 2013
+-- Compiling module D_memory
+-- Compiling module D_memory_tb_file_io
+
+Top level modules:
+	D_memory_tb_file_io
 
 } {} {}} C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/I_memory_tb.v {1 {vlog -work work C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/I_memory_tb.v
 Model Technology ModelSim PE Student Edition vlog 10.2c Compiler 2013.07 Jul 18 2013
@@ -58,13 +58,6 @@ Model Technology ModelSim PE Student Edition vlog 10.2c Compiler 2013.07 Jul 18 
 
 Top level modules:
 	PC
-
-} {} {}} C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/CPU.v {1 {vlog -work work C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/CPU.v
-Model Technology ModelSim PE Student Edition vlog 10.2c Compiler 2013.07 Jul 18 2013
--- Compiling module CPU
-
-Top level modules:
-	CPU
 
 } {} {}} C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/D_memory.v {1 {vlog -work work C:/Users/Haohang/Documents/NetBeansProjects/CE3001-Project/D_memory.v
 Model Technology ModelSim PE Student Edition vlog 10.2c Compiler 2013.07 Jul 18 2013

@@ -83,7 +83,7 @@ module CPU(Clk, Rst);
   wire [15:0] LHBOut;
     
   //Multiplexer Implementation
-  assign MuxOut[0] = ID_Buff[3][0]?MuxOut[1]:AddOut[0];
+  assign MuxOut[0] = ID_Buff[3][0]?MuxOut[1]:IF_Buff_1_wire;
   assign MuxOut[1] = ID_Buff[3][1]?ID_Buff_5_wire:MuxOut[2];
   assign MuxOut[2] = ID_Buff[3][2]?AddOut[1]:ID_Buff[7]; 
   assign MuxOut[3] = MEM_Buff[3][3]?16'd15:MEM_Buff[0][11:8];
@@ -135,31 +135,40 @@ module CPU(Clk, Rst);
   
   always@(posedge Clk) begin
   
+  if (!Rst) begin
+    
+    for (i = 0; i <= 15; i = i+1) begin
+      ID_Buff[i] <= 16'd0;
+      EX_Buff[i] <= 16'd0;
+      MEM_Buff[i] <= 16'd0;
+    end
+  end else begin
   // IF -> ID
   
-  ID_Buff[0] <= IF_Buff_0_wire;
-  ID_Buff[1] <= IF_Buff_1_wire;
+    ID_Buff[0] <= IF_Buff_0_wire;
+    ID_Buff[1] <= IF_Buff_1_wire;
   
   // ID -> EX
   
-  for (i = 0; i <= 3; i = i+1)
-    EX_Buff[i] <=  ID_Buff[i];
+    for (i = 0; i <= 3; i = i+1)
+      EX_Buff[i] <=  ID_Buff[i];
     
-  EX_Buff[4] <= ID_Buff_4_wire;
-  EX_Buff[5] <= ID_Buff_5_wire;
+    EX_Buff[4] <= ID_Buff_4_wire;
+    EX_Buff[5] <= ID_Buff_5_wire;
   
-  for (i = 6; i <= 7; i = i+1)
-    EX_Buff[i] <=  ID_Buff[i];
+    for (i = 6; i <= 7; i = i+1)
+      EX_Buff[i] <=  ID_Buff[i];
   
   // EX -> MEM
   
-  for (i = 0; i <= 8; i = i+1)
-    MEM_Buff[i] <=  EX_Buff[i];
+    for (i = 0; i <= 8; i = i+1)
+      MEM_Buff[i] <=  EX_Buff[i];
     
-  MEM_Buff[9] <= EX_Buff_9_wire;
-  MEM_Buff[10] <= EX_Buff_10_wire;
+    MEM_Buff[9] <= EX_Buff_9_wire;
+    MEM_Buff[10] <= EX_Buff_10_wire;
   
-  end  
+    end
+  end
   
 endmodule
             

@@ -12,7 +12,7 @@ module I_memory(
   
   always@(posedge clk or posedge rst) 
     begin
-      if(!rst)
+      if(rst)
         begin
           addr_inc = 0;
           I_init = $fopen("I_memory_init.txt","r");
