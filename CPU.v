@@ -91,11 +91,11 @@ module CPU(Clk, Rst);
   assign MuxOut[3] = MEM_Buff[3][3]?16'd15:MEM_Buff[0][11:8];
   assign MuxOut[4] = ID_Buff[3][4]?ID_Buff_4_wire:ID_Buff[6];
   assign MuxOut[5] = ID_Buff[3][5]?ID_Buff_5_wire:ID_Buff[6];
-  assign MuxOut[6] = EX_Buff[3][6]?EX_Buff[1]:MuxOut[10];  
+  assign MuxOut[6] = MEM_Buff[3][6]?MEM_Buff[1]:MuxOut[10];  
   assign MuxOut[7] = MEM_Buff[3][7]?MEM_Buff_11_wire:MuxOut[6];
-  assign MuxOut[8] = ID_Buff[3][8]?ID_Buff[0][11:8]:ID_Buff[0][3:0];
+  assign MuxOut[8] = IF_Buff_3_wire[8]?IF_Buff_0_wire[11:8]:IF_Buff_0_wire[3:0];
   assign MuxOut[9] = ID_Buff[3][9]?Spec_Addr_Reg:MuxOut[0];
-  assign MuxOut[10] = EX_Buff[3][10]?LHBOut:EX_Buff_10_wire;
+  assign MuxOut[10] = MEM_Buff[3][10]?LHBOut:MEM_Buff[10];
   assign MuxOut[11] = ID_Buff[3][11]?ID_Buff[0][3:0]:MuxOut[5];
   
   //Implement addition logic
@@ -129,7 +129,7 @@ module CPU(Clk, Rst);
     EX_Buff[8] <= MuxOut[5];
   end
   
-  alu A4(.A(MuxOut[4]), .B(MuxOut[5]), .op(ID_Buff[3]), .lastFlag(EX_Buff_9_wire), 
+  alu A4(.A(MuxOut[4]), .B(MuxOut[11]), .op(ID_Buff[2]), .lastFlag(EX_Buff_9_wire), 
          .imm(ID_Buff_0_wire[3:0]), .clk(Clk), .out(EX_Buff_10_wire), .flag(EX_Buff_9_wire));
   
   /**********Memory Access************/
