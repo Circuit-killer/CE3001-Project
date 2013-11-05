@@ -103,7 +103,7 @@ module CPU(Clk, Rst);
   assign AddOut[1] = ID_Buff[1] + ID_Buff[6];
   
   //Implement or logic
-  assign LHBOut = {ID_Buff_5_wire[7:0],ID_Buff[6][7:0]};
+  assign LHBOut = {MEM_Buff[6][7:0],MEM_Buff[5][7:0]};
   
   //Module Instantiation
   /**********Instruction Fectch**********/

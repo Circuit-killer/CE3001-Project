@@ -91,11 +91,11 @@ module CPU(Clk, Rst);
   assign MuxOut[3] = MEM_Buff[3][3]?16'd15:MEM_Buff[0][11:8];
   assign MuxOut[4] = ID_Buff[3][4]?ID_Buff_4_wire:ID_Buff[6];
   assign MuxOut[5] = ID_Buff[3][5]?ID_Buff_5_wire:ID_Buff[6];
-  assign MuxOut[6] = EX_Buff[3][6]?EX_Buff[1]:MuxOut[10];  
+  assign MuxOut[6] = MEM_Buff[3][6]?MEM_Buff[1]:MuxOut[10];  
   assign MuxOut[7] = MEM_Buff[3][7]?MEM_Buff_11_wire:MuxOut[6];
   assign MuxOut[8] = IF_Buff_3_wire[8]?IF_Buff_0_wire[11:8]:IF_Buff_0_wire[3:0];
   assign MuxOut[9] = ID_Buff[3][9]?Spec_Addr_Reg:MuxOut[0];
-  assign MuxOut[10] = EX_Buff[3][10]?LHBOut:EX_Buff_10_wire;
+  assign MuxOut[10] = MEM_Buff[3][10]?LHBOut:MEM_Buff[10];
   assign MuxOut[11] = ID_Buff[3][11]?ID_Buff[0][3:0]:MuxOut[5];
   
   //Implement addition logic
@@ -103,7 +103,7 @@ module CPU(Clk, Rst);
   assign AddOut[1] = ID_Buff[1] + ID_Buff[6];
   
   //Implement or logic
-  assign LHBOut = {ID_Buff_5_wire[7:0],ID_Buff[6][7:0]};
+  assign LHBOut = {MEM_Buff[5][7:0],MEM_Buff[6][7:0]};
   
   //Module Instantiation
   /**********Instruction Fectch**********/

@@ -1,61 +1,53 @@
-`include "define.v"
-
-module Reg_File(
-                input [`RSIZE - 1:0]      RAddr1, RAddr2, WAddr,
-                input [`DSIZE - 1:0]      WData,
-                input                     Wen, Clock, Reset,
-                output [`DSIZE -1 :0]     RData1, RData2
-                );
-  reg [`DSIZE - 1:0]                      regFile [0:15];
-  integer                                 i;
+module Reg_File(Clock,Reset,RAddr1,RAddr2,Wen,WAddr,WData,RData1,RData2);
   
-  /*
-  always @(!Reset) begin
-    for (i = 0; i < 8; i = i + 1) begin
-      regFile[i] <= 16'b0;
+  input [3:0] RAddr1;
+  input [3:0] RAddr2;
+  input [3:0] WAddr;
+  input [15:0] WData;
+  input Wen;
+  input Clock;
+  input Reset;
+  output reg [15:0] RData1;
+  output reg [15:0] RData2;
+  
+  reg [15:0] Register [0:15];
+  
+  always @(!Reset)
+  begin
+
+      Register[0] = 16'd0; 
+      Register[1] = 16'd0;
+      Register[2] = 16'd0;
+      Register[3] = 16'd0;
+      Register[4] = 16'd0;
+      Register[5] = 16'd0;
+      Register[6] = 16'd0;
+      Register[7] = 16'd0;
+      Register[8] = 16'd0;
+      Register[9] = 16'd0;
+      Register[10] = 16'd0;
+      Register[11] = 16'd0;
+      Register[12] = 16'd0;
+      Register[13] = 16'd0;
+      Register[14] = 16'd0;
+      Register[15] = 16'd0;
+      
+      RData1 = 16'd0;
+      RData2 = 16'd0;
+    
+  end
+  
+  always @(posedge Clock)
+  begin
+    if (!Reset) begin
+      
+    end else begin
+      RData1 <= Register[RAddr1];
+      RData2 <= Register[RAddr2];
+      if (Wen && WAddr != 4'd0) begin
+        Register[WAddr] <= WData;  
+      end
     end
   end
   
-  always @(posedge Clock) begin
-    if (Reset) begin
-      if (Wen) regFile[WAddr] <= WData;
-      regFile[0] = 0;    
-      RData1 = regFile[RAddr1];
-      RData2 = regFile[RAddr2];
-    end
-  end
-*/
-  always@(posedge Clock) begin
-    if(!Reset) begin
-      regFile[0]  <= 0;
-      regFile[1]  <= 0;
-      regFile[2]  <= 0;
-      regFile[3]  <= 0;
-      regFile[4]  <= 0;
-      regFile[5]  <= 0;
-      regFile[6]  <= 0;
-      regFile[7]  <= 0;
-      regFile[8]  <= 0;
-      regFile[9]  <= 0;
-      regFile[10]  <= 0;
-      regFile[11]  <= 0;
-      regFile[12]  <= 0;
-      regFile[13]  <= 0;
-      regFile[14]  <= 0;
-      regFile[15]  <= 0;
-    end else begin 
-        regFile[WAddr] <= ((Wen == 1) && (WAddr != 0)) ? WData : regFile[WAddr];
-    end // else: !if(!Reset)
-  end
-
-  // bypass writing
-  assign RData1 = regFile[RAddr1];
-  assign RData2 = regFile[RAddr2];
-  //assign RData1 = ((WAddr == RAddr1) && (WAddr != 0) && (WAddr != 15)) ? WData : regFile[RAddr1];
-  //assign RData2 = ((WAddr == RAddr2) && (WAddr != 0) && (WAddr != 15)) ? WData : regFile[RAddr2];
-  //assign RData1 = ((WAddr != 0) && (WAddr != 15)) ? WData : regFile[RAddr1];
-  //assign RData2 = ((WAddr != 0) && (WAddr != 15)) ? WData : regFile[RAddr2];
-  //R0 is constant 0
-  //R15 is PC|Address register
-endmodule // Reg_File
-
+endmodule

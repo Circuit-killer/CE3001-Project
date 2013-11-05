@@ -107,22 +107,22 @@ module control(OpCode,Cond, Flag, ALUOp, WriteEn, MemEnab, MemWrite, Signal);
                ALUOp    = 3'b000;
                WriteEn  = 1'b1;
                MemEnab  = 1'b1;
-               MemWrite = 1'b0;
+               MemWrite = 1'b1;
              end
       //SW         
       4'b1001: begin
-               Signal   = 12'b100010010110;
+               Signal   = 12'b100100110000;
                ALUOp    = 3'b000;
                WriteEn  = 1'b0;
                MemEnab  = 1'b1;
-               MemWrite = 1'b1;
+               MemWrite = 1'b0;
              end
       //LHB        
       4'b1010: begin
                Signal   = 12'b010100000000;
                WriteEn  = 1'b1;
                MemEnab  = 1'b0;
-               MemWrite = 1'b0;
+               MemWrite = 1'b1;
              end
       //LLB         
       4'b1011: begin
@@ -130,7 +130,7 @@ module control(OpCode,Cond, Flag, ALUOp, WriteEn, MemEnab, MemWrite, Signal);
                ALUOp    = 3'b010;
                WriteEn  = 1'b1;
                MemEnab  = 1'b0;
-               MemWrite = 1'b0;
+               MemWrite = 1'b1;
              end
       //B        
       4'b1100: begin
@@ -138,12 +138,12 @@ module control(OpCode,Cond, Flag, ALUOp, WriteEn, MemEnab, MemWrite, Signal);
                Signal   = 12'b000000110001;
                WriteEn  = 1'b0;
                MemEnab  = 1'b0;
-               MemWrite = 1'b0;
+               MemWrite = 1'b1;
                end else begin
                Signal   = 12'b000000110000;
                WriteEn  = 1'b0;
                MemEnab  = 1'b0;
-               MemWrite = 1'b0;
+               MemWrite = 1'b1;
                end
              end
       //JAL         
@@ -151,21 +151,21 @@ module control(OpCode,Cond, Flag, ALUOp, WriteEn, MemEnab, MemWrite, Signal);
                Signal   = 12'b000101111101;
                WriteEn  = 1'b1; 
                MemEnab  = 1'b0;
-               MemWrite = 1'b0;
+               MemWrite = 1'b1;
              end 
       //JR         
       4'b1110: begin
                Signal   = 12'b000101111111;
                WriteEn  = 1'b0; 
                MemEnab  = 1'b0;
-               MemWrite = 1'b0;
+               MemWrite = 1'b1;
              end
       //EXEC : EXEC(Next)to be completed      
       4'b1111: begin
                Signal   = 12'b000100110111;
                WriteEn  = 1'b1;
                MemEnab  = 1'b0;
-               MemWrite = 1'b0;
+               MemWrite = 1'b1;
              end    
 
     endcase  

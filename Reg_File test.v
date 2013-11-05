@@ -49,8 +49,8 @@ module Reg_File(
   end
 
   // bypass writing
-  assign RData1 = RegFile[RAddr1];
-  assign RData2 = RegFile[RAddr2];
+  assign RData1 = regFile[RAddr1];
+  assign RData2 = regFile[RAddr2];
   //assign RData1 = ((WAddr == RAddr1) && (WAddr != 0) && (WAddr != 15)) ? WData : regFile[RAddr1];
   //assign RData2 = ((WAddr == RAddr2) && (WAddr != 0) && (WAddr != 15)) ? WData : regFile[RAddr2];
   //assign RData1 = ((WAddr != 0) && (WAddr != 15)) ? WData : regFile[RAddr1];
