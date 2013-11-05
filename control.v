@@ -1,10 +1,10 @@
-module control(OpCode,Cond, Flag, ALUOp, WriteEn, MemEnab, MemWrite, Signal);
+module control(OpCode,Cond, Flag, EXECTest, ALUOp, WriteEn, MemEnab, MemWrite, Signal);
 
   //declare input and output signal
   input [3:0] OpCode;
   input [2:0] Cond;
   input [2:0] Flag;
-  
+  input [3:0] EXECTest;
   
   output reg MemEnab, MemWrite, WriteEn;
   output reg [2:0] ALUOp;
@@ -163,12 +163,20 @@ module control(OpCode,Cond, Flag, ALUOp, WriteEn, MemEnab, MemWrite, Signal);
       //EXEC : EXEC(Next)to be completed      
       4'b1111: begin
                Signal   = 12'b000100110111;
-               WriteEn  = 1'b1;
+               WriteEn  = 1'b0;
                MemEnab  = 1'b0;
                MemWrite = 1'b1;
              end    
 
-    endcase  
+    endcase
+    
+    if (EXECTest == 4'hf) begin
+        Signal = 12'b001000000000;
+        WriteEn  = 1'b0;
+        MemEnab  = 1'b0;
+        MemWrite = 1'b1;
+    end
+    
   end
   
 endmodule

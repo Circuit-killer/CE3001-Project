@@ -39,7 +39,7 @@ module CPU(Clk, Rst);
   reg [15:0] EX_Buff [0:15];
   reg [15:0] MEM_Buff [0:15];
   
-  reg [15:0] Spec_Addr_Reg;
+  //reg [15:0] Spec_Addr_Reg;
   
   wire [15:0] IF_Buff_0_wire;
   wire [15:0] IF_Buff_1_wire;
@@ -86,24 +86,27 @@ module CPU(Clk, Rst);
     
   //Multiplexer Implementation
   assign MuxOut[0] = ID_Buff[3][0]?MuxOut[1]:IF_Buff_1_wire;
-  assign MuxOut[1] = ID_Buff[3][1]?ID_Buff_5_wire:MuxOut[2];
-  assign MuxOut[2] = ID_Buff[3][2]?AddOut[1]:ID_Buff[7]; 
+  assign MuxOut[1] = ID_Buff[3][1]?ID_Buff_5_wire:AddOut[1];
+  assign MuxOut[2] = ID_Buff[3][2]?ID_Buff[7]:ID_Buff[6]; 
   assign MuxOut[3] = MEM_Buff[3][3]?16'd15:MEM_Buff[0][11:8];
   assign MuxOut[4] = ID_Buff[3][4]?ID_Buff_4_wire:ID_Buff[6];
   assign MuxOut[5] = ID_Buff[3][5]?ID_Buff_5_wire:ID_Buff[6];
   assign MuxOut[6] = MEM_Buff[3][6]?MEM_Buff[1]:MuxOut[10];  
   assign MuxOut[7] = MEM_Buff[3][7]?MEM_Buff_11_wire:MuxOut[6];
   assign MuxOut[8] = IF_Buff_3_wire[8]?IF_Buff_0_wire[11:8]:IF_Buff_0_wire[3:0];
-  assign MuxOut[9] = ID_Buff[3][9]?Spec_Addr_Reg:MuxOut[0];
+  assign MuxOut[9] = ID_Buff[3][9]?EX_Buff[1]:MuxOut[0];
   assign MuxOut[10] = MEM_Buff[3][10]?LHBOut:MEM_Buff[10];
   assign MuxOut[11] = ID_Buff[3][11]?ID_Buff[0][3:0]:MuxOut[5];
   
+  //Identify EXEC Next stage
+  //assign IF_Buff_3_wire[9] = (EX_Buff[0][15:12]==4'hf)?1:0;
+  
   //Implement addition logic
   //assign AddOut[0] = IF_Buff[1] + 16'b1;
-  assign AddOut[1] = ID_Buff[1] + ID_Buff[6];
+  assign AddOut[1] = ID_Buff[1] + MuxOut[2];
   
   //Implement or logic
-  assign LHBOut = {MEM_Buff[5][7:0],MEM_Buff[6][7:0]};
+  assign LHBOut = {MEM_Buff[6][7:0],MEM_Buff[5][7:0]};
   
   //Module Instantiation
   /**********Instruction Fectch**********/
@@ -111,17 +114,17 @@ module CPU(Clk, Rst);
   PC A1(.Clk(Clk), .Rst(Rst), .CurrPC(MuxOut[9]), .NextPC(IF_Buff_1_wire));
   
   /**********Instruction Decode**********/
-  control A2(.OpCode(IF_Buff_0_wire[15:12]), .Cond(IF_Buff_0_wire[3:0]), .Flag(EX_Buff_9_wire), 
-             .ALUOp(IF_Buff_2_wire), .WriteEn(IF_Buff_3_wire[14]), .MemEnab(IF_Buff_3_wire[12]), 
-             .MemWrite(IF_Buff_3_wire[13]), .Signal(IF_Buff_3_wire[11:0]));
+  control A2(.OpCode(IF_Buff_0_wire[15:12]), .Cond(IF_Buff_0_wire[11:8]), .Flag(EX_Buff_9_wire), 
+             .EXECTest(EX_Buff_0_wire[15:12]), .ALUOp(IF_Buff_2_wire), .WriteEn(IF_Buff_3_wire[14]), 
+             .MemEnab(IF_Buff_3_wire[12]), .MemWrite(IF_Buff_3_wire[13]), .Signal(IF_Buff_3_wire[11:0]));
              
   Reg_File A3(.RAddr1(IF_Buff_0_wire[7:4]), .RAddr2(MuxOut[8]), .WAddr(MuxOut[3]), 
               .WData(MuxOut[7]), .Wen(MEM_Buff_3_wire[14]), .Clock(Clk), .Reset(Rst), 
               .RData1(ID_Buff_4_wire), .RData2(ID_Buff_5_wire));
   
   always@(posedge Clk) begin
-    ID_Buff[6] <= IF_Buff_0_wire[7:0];    // should be 2's complement
-    ID_Buff[7] <= IF_Buff_0_wire[11:0];   // should be 2's complement
+    ID_Buff[6] <= {IF_Buff_0_wire[7]?8'hff:8'h00, IF_Buff_0_wire[7:0]};    // should be 2's complement
+    ID_Buff[7] <= {IF_Buff_0_wire[11]?4'hf:4'h0, IF_Buff_0_wire[11:0]};   // should be 2's complement
   end
   
   /**********Execute***********/
@@ -145,6 +148,9 @@ module CPU(Clk, Rst);
       EX_Buff[i] <= 16'd0;
       MEM_Buff[i] <= 16'd0;
     end
+    
+    //Spec_Addr_Reg <= 16'd0;
+    
   end else begin
   // IF -> ID
   
