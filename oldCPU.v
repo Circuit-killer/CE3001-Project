@@ -55,8 +55,8 @@ module CPU(Clk, Rst);
   //########################################
   wire [16:0] ID_Buff_3_wire = ID_Buff3;
   //########################################
-  wire [15:0] ID_Buff_4_wire;
-  wire [15:0] ID_Buff_5_wire;
+  wire [15:0] ID_Buff_4_wire = ID_Buff[4];
+  wire [15:0] ID_Buff_5_wire = ID_Buff[5];
   wire [15:0] ID_Buff_6_wire = ID_Buff[6];
   wire [15:0] ID_Buff_7_wire = ID_Buff[7];
 
@@ -66,8 +66,8 @@ module CPU(Clk, Rst);
   //########################################
   wire [16:0] EX_Buff_3_wire = EX_Buff3;
   //########################################
-  wire [15:0] EX_Buff_4_wire;
-  wire [15:0] EX_Buff_5_wire;
+  wire [15:0] EX_Buff_4_wire = EX_Buff[4];
+  wire [15:0] EX_Buff_5_wire = EX_Buff[5];
   wire [15:0] EX_Buff_6_wire = EX_Buff[6];
   wire [15:0] EX_Buff_7_wire = EX_Buff[7];
   wire [15:0] EX_Buff_8_wire = EX_Buff[8];
@@ -106,8 +106,8 @@ module CPU(Clk, Rst);
   assign MuxOut[9] = IF_Buff_3_wire[9] ? EX_Buff[1] : MuxOut[0];
   assign MuxOut[10] = MEM_Buff3[10] ? LHBOut : MEM_Buff[10];
   assign MuxOut[11] = ID_Buff3[11] ? ID_Buff[0][3:0] : MuxOut[5];
-  assign MuxOut[12] = ID_Buff3[12] ? EX_Buff_10_wire : ID_Buff_4_wire;
-  assign MuxOut[13] = ID_Buff3[13] ? EX_Buff_10_wire : ID_Buff_5_wire;
+  assign MuxOut[12] = ID_Buff3[12] ? EX_Buff[10] : ID_Buff_4_wire;
+  assign MuxOut[13] = ID_Buff3[13] ? EX_Buff[10] : ID_Buff_5_wire;
   //Identify EXEC Next stage
   //assign IF_Buff_3_wire[9] = (EX_Buff[0][15:12]==4'hf)?1:0;
   
@@ -132,21 +132,21 @@ module CPU(Clk, Rst);
   
   /**********Instruction Decode**********/
   control A2(.OpCode(IF_Buff_0_wire[15:12]),
-             .Cond(IF_Buff_0_wire[10:8]),
-             .Flag(EX_Buff_9_wire[2:0]), 
+             .Cond(IF_Buff_0_wire[11:8]),
+             .Flag(EX_Buff_9_wire), 
              .EXECTest(EX_Buff_0_wire[15:12]),
-             .LastInstr(ID_Buff_0_wire),
+             .LastInstr(EX_Buff_0_wire),
              .AddrRs(IF_Buff_0_wire[7:4]),
              .AddrRt(IF_Buff_0_wire[3:0]),
-             .ALUOp(IF_Buff_2_wire[2:0]),
+             .ALUOp(IF_Buff_2_wire),
              .WriteEn(IF_Buff_3_wire[16]), 
              .MemEnab(IF_Buff_3_wire[14]),
              .MemWrite(IF_Buff_3_wire[15]),
              .Signal(IF_Buff_3_wire[13:0]));
              
   Reg_File A3(.RAddr1(IF_Buff_0_wire[7:4]),
-              .RAddr2(MuxOut[8][3:0]),
-              .WAddr(MuxOut[3][3:0]), 
+              .RAddr2(MuxOut[8]),
+              .WAddr(MuxOut[3]), 
               .WData(MuxOut[7]), 
               .Wen(MEM_Buff_3_wire[16]),
               .Clock(Clk),
@@ -168,12 +168,12 @@ module CPU(Clk, Rst);
   
   alu A4(.A(MuxOut[4]),
          .B(MuxOut[11]),
-         .op(ID_Buff[2][2:0]),
-         .lastFlag(EX_Buff_9_wire[2:0]), 
+         .op(ID_Buff[2]),
+         .lastFlag(EX_Buff_9_wire), 
          .imm(ID_Buff_0_wire[3:0]),
          .clk(Clk),
          .out(EX_Buff_10_wire),
-         .flag(EX_Buff_9_wire[2:0]));
+         .flag(EX_Buff_9_wire));
   
   /**********Memory Access************/
   D_memory A5(.address(EX_Buff_10_wire),

@@ -31,6 +31,7 @@ module D_memory(
                 addr_inc = addr_inc + 1;
               end
             end
+            
           $fclose(D_init);
           for (i = addr_inc - 1; i < 2 ** `MEM_SPACE; i = i + 1)
             begin
@@ -44,6 +45,7 @@ module D_memory(
               memory[address] <= data_in;
             end
           data_out <= memory[address];
+          //$display("asdfasdf %h and %h", address, data_out);
         end // else: !if(rst)
     end // always @ (posedge clk or posedge rst)
 endmodule // D_memory
