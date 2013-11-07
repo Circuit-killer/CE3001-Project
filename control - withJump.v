@@ -87,7 +87,7 @@ module control(OpCode,
      
       // ADD
       4'b0000: begin
-               Signal[11:0] = 12'b000000110110;
+               Signal[11:0] = 12'b0000_0011_0110;
                ALUOp    = 3'b000;
                WriteEn  = 1'b1;
                MemEnab  = 1'b0;
@@ -95,7 +95,7 @@ module control(OpCode,
                end
       //SUB
       4'b0001: begin
-               Signal[11:0] = 12'b000000110110;
+               Signal[11:0] = 12'b0000_0011_0110;
                ALUOp    = 3'b001;
                WriteEn  = 1'b1;
                MemEnab  = 1'b0;
@@ -103,7 +103,7 @@ module control(OpCode,
                end             
       //AND         
       4'b0010: begin
-               Signal[11:0] = 12'b000000110110;
+               Signal[11:0] = 12'b0000_0011_0110;
                ALUOp    = 3'b010;
                WriteEn  = 1'b1;
                MemEnab  = 1'b0;
@@ -111,7 +111,7 @@ module control(OpCode,
                end
       //OR        
       4'b0011: begin
-               Signal[11:0] = 12'b000000110110;
+               Signal[11:0] = 12'b0000_0011_0110;
                ALUOp    = 3'b011;
                WriteEn  = 1'b1;
                MemEnab  = 1'b0;
@@ -119,7 +119,7 @@ module control(OpCode,
                end
       //SLL         
       4'b0100: begin
-               Signal[11:0] = 12'b000000010110;
+               Signal[11:0] = 12'b0000_0001_0110;
                ALUOp    = 3'b100;
                WriteEn  = 1'b1;
                MemEnab  = 1'b0;
@@ -127,7 +127,7 @@ module control(OpCode,
              end
       //SRL        
       4'b0101: begin
-               Signal[11:0] = 12'b000000010110;
+               Signal[11:0] = 12'b0000_0001_0110;
                ALUOp    = 3'b101;
                WriteEn  = 1'b1;
                MemEnab  = 1'b0;
@@ -135,7 +135,7 @@ module control(OpCode,
              end
       //SRA         
       4'b0110: begin
-               Signal[11:0] = 12'b000000010110;
+               Signal[11:0] = 12'b0000_0001_0110;
                ALUOp    = 3'b110;
                WriteEn  = 1'b1;
                MemEnab  = 1'b0;
@@ -143,7 +143,7 @@ module control(OpCode,
              end
       //RL
       4'b0111: begin
-               Signal[11:0] = 12'b000000010110;
+               Signal[11:0] = 12'b0000_0001_0110;
                ALUOp    = 3'b111;
                WriteEn  = 1'b1;
                MemEnab  = 1'b0;
@@ -151,7 +151,7 @@ module control(OpCode,
              end
       //LW         
       4'b1000: begin
-               Signal[11:0] = 12'b100010010110;
+               Signal[11:0] = 12'b1000_1001_0110;
                ALUOp    = 3'b000;
                WriteEn  = 1'b1;
                MemEnab  = 1'b1;
@@ -159,7 +159,7 @@ module control(OpCode,
              end
       //SW         
       4'b1001: begin
-               Signal[11:0] = 12'b100100110000;
+               Signal[11:0] = 12'b1001_0011_0000;
                ALUOp    = 3'b000;
                WriteEn  = 1'b0;
                MemEnab  = 1'b1;
@@ -167,14 +167,14 @@ module control(OpCode,
              end
       //LHB        
       4'b1010: begin
-               Signal[11:0] = 12'b010100000000;
+               Signal[11:0] = 12'b0101_0000_0000;
                WriteEn  = 1'b1;
                MemEnab  = 1'b0;
                MemWrite = 1'b1;
              end
       //LLB         
       4'b1011: begin
-               Signal[11:0] = 12'b000000000000;
+               Signal[11:0] = 12'b0000_0000_0000;
                ALUOp    = 3'b010;
                WriteEn  = 1'b1;
                MemEnab  = 1'b0;
@@ -183,12 +183,12 @@ module control(OpCode,
       //B        
       4'b1100: begin
                if (BS == 1) begin
-               Signal[11:0] = 12'b000000110001;
+               Signal[11:0] = 12'b0000_0011_0001;
                WriteEn  = 1'b0;
                MemEnab  = 1'b0;
                MemWrite = 1'b1;
                end else begin
-               Signal[11:0] = 12'b000000110000;
+               Signal[11:0] = 12'b0000_0011_0000;
                WriteEn  = 1'b0;
                MemEnab  = 1'b0;
                MemWrite = 1'b1;
@@ -196,21 +196,21 @@ module control(OpCode,
              end
       //JAL         
       4'b1101: begin
-               Signal[11:0] = 12'b000101111101;
+               Signal[11:0] = 12'b0001_0111_1101;
                WriteEn  = 1'b1; 
                MemEnab  = 1'b0;
                MemWrite = 1'b1;
              end 
       //JR
       4'b1110: begin
-               Signal[11:0] = 12'b000100000011;
+               Signal[11:0] = 12'b0001_0000_0011;
                WriteEn  = 1'b0; 
                MemEnab  = 1'b0;
                MemWrite = 1'b1;
              end
       //EXEC : EXEC(Next)to be completed      
       4'b1111: begin
-               Signal[11:0] = 12'b000100110111;
+               Signal[11:0] = 12'b0001_0011_0111;
                WriteEn  = 1'b0;
                MemEnab  = 1'b0;
                MemWrite = 1'b1;
@@ -219,7 +219,7 @@ module control(OpCode,
     endcase
     
     if (EXECTest == 4'hf) begin
-        Signal[11:0] = 12'b001000000000;
+        Signal[11:0] = 12'b0010_0000_0000;
         WriteEn  = 1'b0;
         MemEnab  = 1'b0;
         MemWrite = 1'b1;
