@@ -61,7 +61,7 @@ module control(OpCode,
     end else begin
       PCctrl = 1'b0;
     end
-    if (LastPCctrl == 1'b1) begin
+    if (LastPCctrl == 1'b1 && BS == 1'b1) begin
       PChold = 1'b1;
     end else begin
       PChold = 1'b0;
