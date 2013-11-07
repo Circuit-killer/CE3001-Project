@@ -40,9 +40,11 @@ module CPU(Clk, Rst);
   reg [16:0] EX_Buff3;
   reg [15:0] MEM_Buff [0:15];
   reg [16:0] MEM_Buff3;
+  reg PCctrl_Buff;
+  
+  
   
   //reg [15:0] Spec_Addr_Reg;
-  
   wire [15:0] IF_Buff_0_wire;
   wire [15:0] IF_Buff_1_wire;
   wire [2:0] IF_Buff_2_wire;
@@ -92,10 +94,12 @@ module CPU(Clk, Rst);
   wire [15:0] AddOut;
   wire [15:0] LHBOut;
   wire PCctrl;
+  wire PChold;
+  wire PCctrl_Buff_wire = PCctrl_Buff;
   
   //Multiplexer Implementation
   assign MuxOut[0] = ID_Buff_3_wire[0] ? MuxOut[1] : IF_Buff_1_wire;
-  assign MuxOut[1] = ID_Buff_3_wire[1] ? ID_Buff_5_wire : AddOut;
+  assign MuxOut[1] = ID_Buff_3_wire[1] ? MuxOut[13] : AddOut;
   assign MuxOut[2] = ID_Buff_3_wire[2] ? ID_Buff[7] : ID_Buff[6]; 
   assign MuxOut[3][3:0] = MEM_Buff_3_wire[3] ? 16'd15 : MEM_Buff[0][11:8];
   assign MuxOut[4] = ID_Buff_3_wire[4] ? MuxOut[12] : ID_Buff[6];
@@ -121,15 +125,18 @@ module CPU(Clk, Rst);
   //Module Instantiation
   /**********Instruction Fectch**********/
   I_memory A0(.address(MuxOut[9]),
+              //.address(IF_Buff_1_wire), -> wrong
               .data_out(IF_Buff_0_wire),
               .clk(Clk),
               .rst(Rst),
-              .PCctrl(PCctrl));
+              .PCctrl(PCctrl),
+              .PChold(PChold));
               
   PC A1(.Clk(Clk),
         .Rst(Rst),
         .CurrPC(MuxOut[9]),
-        .PCctrl(PCctrl),
+        //.PCctrl(PCctrl),
+        .PChold(PChold),
         .NextPC(IF_Buff_1_wire));
   
   /**********Instruction Decode**********/
@@ -138,14 +145,17 @@ module CPU(Clk, Rst);
              .Flag(EX_Buff_9_wire[2:0]), 
              .EXECTest(EX_Buff_0_wire[15:12]),
              .LastInstr(ID_Buff_0_wire),
+             .AddrRd(IF_Buff_0_wire[11:8]),
              .AddrRs(IF_Buff_0_wire[7:4]),
              .AddrRt(IF_Buff_0_wire[3:0]),
+             .LastPCctrl(PCctrl_Buff_wire),
              .ALUOp(IF_Buff_2_wire[2:0]),
              .WriteEn(IF_Buff_3_wire[16]), 
              .MemEnab(IF_Buff_3_wire[14]),
              .MemWrite(IF_Buff_3_wire[15]),
              .Signal(IF_Buff_3_wire[13:0]),
-             .PCctrl(PCctrl));
+             .PCctrl(PCctrl),
+             .PChold(PChold));
              
   Reg_File A3(.RAddr1(IF_Buff_0_wire[7:4]),
               .RAddr2(MuxOut[8][3:0]),
@@ -202,7 +212,9 @@ module CPU(Clk, Rst);
     
   end else begin
   // IF -> ID
-  
+    
+    PCctrl_Buff <= PCctrl;
+    
     ID_Buff[0] <= IF_Buff_0_wire;
     ID_Buff[1] <= IF_Buff_1_wire;
     ID_Buff[2] <= IF_Buff_2_wire;

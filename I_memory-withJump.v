@@ -5,11 +5,14 @@ module I_memory(
                 output reg [`ISIZE-1:0] data_out, // data output
                 input                   clk,
                 input                   rst,
-                input                   PCctrl
+                input                   PCctrl, PChold
                 );
   reg [`ISIZE-1:0]                      memory [0:2**`MEM_SPACE];
   reg [8*`MAX_LINE_LENGTH:0]            line; /* Line of text read from file */
   integer                               I_init, addr_inc, i, c, r;
+  wire [`MEM_SPACE-1:0] realAddress;
+  
+  assign realAddress = (PChold) ? (address - 1) : address;
   
   always@(posedge clk or posedge rst) 
     begin
@@ -45,7 +48,7 @@ module I_memory(
       else
         begin
           if (PCctrl == 1'b0) begin
-            data_out <= memory[address];
+            data_out <= memory[realAddress];
           end else begin
             data_out <= 16'b0;
           end

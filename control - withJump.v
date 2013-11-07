@@ -5,14 +5,17 @@ module control(OpCode,
                Flag,
                EXECTest,
                LastInstr,
+               AddrRd,
                AddrRs,
                AddrRt,
+               LastPCctrl,
                ALUOp,
                WriteEn,
                MemEnab,
                MemWrite,
                Signal,
-               PCctrl);
+               PCctrl,
+               PChold);
 
   //declare input and output signal
   input [3:0] OpCode;
@@ -20,12 +23,14 @@ module control(OpCode,
   input [2:0] Flag;
   input [3:0] EXECTest;
   input [`ISIZE-1:0] LastInstr;
-  input [`RSIZE-1:0] AddrRs, AddrRt;
+  input [`RSIZE-1:0] AddrRd, AddrRs, AddrRt;
+  input LastPCctrl;
   
   output reg MemEnab, MemWrite, WriteEn;
   output reg [2:0] ALUOp;
   output reg [13:0] Signal;
   output reg PCctrl;
+  output reg PChold;
   
   wire N,V,Z;
   reg FwALU2Rs, FwALU2Rt;
@@ -51,19 +56,28 @@ module control(OpCode,
       default: BS = 1'b0; // False
               
     endcase 
-  //always @(OpCode or Cond or Flag)
     if (OpCode[3:2] == 2'b11) begin
       PCctrl = 1'b1;
     end else begin
       PCctrl = 1'b0;
     end
+    if (LastPCctrl == 1'b1) begin
+      PChold = 1'b1;
+    end else begin
+      PChold = 1'b0;
+    end
+    
     begin
-      if ((OpCode < 4'd10) && (LastInstr[11:8] == AddrRs) && (AddrRs != 0)) 
+      if ((OpCode < 4'd10) && (LastInstr[11:8] == AddrRs) && (AddrRs != 0))
         FwALU2Rs = 1'b1;
-      else
+      else begin
         FwALU2Rs = 1'b0;
+//        $display("Opcode = %b, LastInstr[11:8] = %h, Rs = %h, Rd = %h",
+//                OpCode, LastInstr[11:8], AddrRs, AddrRd);
+      end
       
-      if ((OpCode < 4'd5) && (LastInstr[11:8] == AddrRt) && (AddrRt != 0))
+      if (((OpCode < 4'd5) && (LastInstr[11:8] == AddrRt) && (AddrRt != 0)) 
+        || ((OpCode > 4'b1101) && (LastInstr[11:8] == AddrRd)))
         FwALU2Rt = 1'b1;
       else 
         FwALU2Rt = 1'b0;
