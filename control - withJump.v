@@ -75,9 +75,12 @@ module control(OpCode,
     if (LastPCctrl == 1'b1 && BS == 1'b1) begin
       PChold = 1'b1;
     end else begin
-      PChold = 1'b0;
+      //if (LastInstr[15:12] < 4'd4 && OpCode == 4'b1100) begin
+      //  PChold = 1'b1;
+      //end else begin
+        PChold = 1'b0;
+      //end
     end
-
     /*
       ALU data forwarding detect.
       If LastInstr's Rd is this Instr's Rs

@@ -125,7 +125,9 @@ module CPU(Clk, Rst);
   //assign IF_Buff_3_wire[9] = (EX_Buff[0][15:12]==4'hf)?1:0;
   
   //Implement addition logic
-  assign AddOut = ID_Buff_1_wire + MuxOut[2];
+  //##############################################
+  assign AddOut = ID_Buff_1_wire + MuxOut[2] + 1;//added a +1;
+  //##############################################
   
   //Implement LHB or logic
   assign LHBOut = {MEM_Buff[6][7:0], MEM_Buff[5][7:0]};
@@ -159,8 +161,7 @@ module CPU(Clk, Rst);
              .WriteEn(IF_Buff_3_wire[18]), 
              .MemEnab(IF_Buff_3_wire[16]),
              .MemWrite(IF_Buff_3_wire[17]),
-             .Signal(IF_Buff_3_wire[15
-             :0]),
+             .Signal(IF_Buff_3_wire[15:0]),
              .PCctrl(PCctrl),
              .PChold(PChold));
   
