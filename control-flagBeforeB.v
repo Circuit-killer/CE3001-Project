@@ -9,6 +9,7 @@ module control(OpCode,
                AddrRs,
                AddrRt,
                LastPCctrl,
+               LastPChold,
                ALUOp,
                WriteEn,
                MemEnab,
@@ -24,7 +25,7 @@ module control(OpCode,
   
   input [`ISIZE-1:0] LastInstr, Last2Instr;
   input [`RSIZE-1:0] AddrRd, AddrRs, AddrRt;
-  input              LastPCctrl;
+  input              LastPCctrl, LastPChold;
   
   output reg         MemEnab, MemWrite, WriteEn;
   output reg [2:0]   ALUOp;
@@ -63,7 +64,10 @@ module control(OpCode,
     
     //If Jump || Branch
     if (OpCode[3:2] == 2'b11) begin
-      PCctrl = 1'b1;
+      if (LastPChold == 1'b1)
+        PCctrl = 1'b0;
+      else
+        PCctrl = 1'b1;
     end else begin
       PCctrl = 1'b0;
     end
@@ -75,11 +79,17 @@ module control(OpCode,
     if (LastPCctrl == 1'b1 && BS == 1'b1) begin
       PChold = 1'b1;
     end else begin
-      //if (LastInstr[15:12] < 4'd4 && OpCode == 4'b1100) begin
-      //  PChold = 1'b1;
-      //end else begin
-        PChold = 1'b0;
-      //end
+      if (LastInstr[15:12] < 4'd4 && OpCode == 4'b1100) begin
+        PChold = 1'b1;
+        BS = 1'b0;
+        PCctrl = 1'b1;
+        $display("Opcode = %b, LastInstr = %h", 
+                 OpCode, LastInstr);
+      end else begin
+        PChold = 1'b0;        
+        $display("111111Opcode = %b, LastInstr[11:8] = %h", 
+                 OpCode, LastInstr[11:8], AddrRs, AddrRd);
+      end
     end
     /*
       ALU data forwarding detect.
