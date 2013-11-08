@@ -96,6 +96,8 @@ module CPU(Clk, Rst);
   wire        PChold;
   reg         PCctrl_Buff; //store last PCctrl signal
   wire        PCctrl_Buff_wire = PCctrl_Buff;
+  reg         PChold_Buff; //store last PCctrl signal
+  wire        PChold_Buff_wire = PChold_Buff;
 
   //Multiplexer Implementation
   assign MuxOut[0] = ID_Buff_3_wire[0] ? MuxOut[1] : IF_Buff_1_wire;
@@ -157,6 +159,7 @@ module CPU(Clk, Rst);
              .AddrRs(IF_Buff_0_wire[7:4]),
              .AddrRt(IF_Buff_0_wire[3:0]),
              .LastPCctrl(PCctrl_Buff_wire),
+             .LastPChold(PChold_Buff_wire),
              .ALUOp(IF_Buff_2_wire[2:0]),
              .WriteEn(IF_Buff_3_wire[18]), 
              .MemEnab(IF_Buff_3_wire[16]),
@@ -219,6 +222,7 @@ module CPU(Clk, Rst);
       //### IF -> ID
       //#########################
       PCctrl_Buff <= PCctrl;
+      PChold_Buff <= PChold;
       
       ID_Buff[0] <= IF_Buff_0_wire;
       ID_Buff[1] <= IF_Buff_1_wire;
