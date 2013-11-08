@@ -1,7 +1,6 @@
 `include "define.v"
 
-module I_memory(
-                input [`MEM_SPACE-1:0]  address, // address input
+module I_memory(input [`MEM_SPACE-1:0]  address, // address input
                 output reg [`ISIZE-1:0] data_out, // data output
                 input                   clk,
                 input                   rst,
@@ -10,7 +9,7 @@ module I_memory(
   reg [`ISIZE-1:0]                      memory [0:2**`MEM_SPACE];
   reg [8*`MAX_LINE_LENGTH:0]            line; /* Line of text read from file */
   integer                               I_init, addr_inc, i, c, r;
-  wire [`MEM_SPACE-1:0] realAddress;
+  wire [`MEM_SPACE-1:0]                 realAddress;
   
   assign realAddress = (PChold) ? (address - 1) : address;
   
@@ -18,7 +17,6 @@ module I_memory(
     begin
       if(!rst)
         begin
-          
           //NOP Instruction
           data_out <= 16'd0;
           
@@ -47,6 +45,8 @@ module I_memory(
         end
       else
         begin
+          //If currently is a stall
+          //  fetch NOP
           if (PCctrl == 1'b0) begin
             data_out <= memory[realAddress];
           end else begin
