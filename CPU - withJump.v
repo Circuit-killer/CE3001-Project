@@ -1,9 +1,10 @@
 module CPU(Clk, Rst);
   
   input Clk, Rst;
-  
-  // Buffer value and usage
   /******************************************
+   *
+   *Buffer value and usage
+   *
    *+==+=============+======+
    *+No+  signalName +sWidth+
    *+==+===Fetch=====+======+
@@ -27,30 +28,32 @@ module CPU(Clk, Rst);
    *+==+=Mem Access==+======+
    *|9 | FLAG        |     3|
    *|10| ALUOut      |    16|
+   *|11| MEMOut      |    16|
    *+==+==Write Back=+======+
+   *
    ******************************************/
   
   integer i;
   
   //reg [15:0] IF_Buff [0:15];
   reg [15:0] ID_Buff [0:15];
-  reg [16:0] ID_Buff3;
+  reg [18:0] ID_Buff3;
   reg [15:0] EX_Buff [0:15];
-  reg [16:0] EX_Buff3;
+  reg [18:0] EX_Buff3;
   reg [15:0] MEM_Buff [0:15];
-  reg [16:0] MEM_Buff3;
+  reg [18:0] MEM_Buff3;
     
   //reg [15:0] Spec_Addr_Reg;
   wire [15:0] IF_Buff_0_wire;
   wire [15:0] IF_Buff_1_wire;
   wire [2:0]  IF_Buff_2_wire;
-  wire [16:0] IF_Buff_3_wire;
+  wire [18:0] IF_Buff_3_wire;
   
   wire [15:0] ID_Buff_0_wire = ID_Buff[0];
   wire [15:0] ID_Buff_1_wire = ID_Buff[1];
   wire [15:0] ID_Buff_2_wire = ID_Buff[2];
   //########################################
-  wire [16:0] ID_Buff_3_wire = ID_Buff3;
+  wire [18:0] ID_Buff_3_wire = ID_Buff3;
   //########################################
   wire [15:0] ID_Buff_4_wire;
   wire [15:0] ID_Buff_5_wire;
@@ -61,7 +64,7 @@ module CPU(Clk, Rst);
   wire [15:0] EX_Buff_1_wire = EX_Buff[1];
   wire [15:0] EX_Buff_2_wire = EX_Buff[2];
   //########################################
-  wire [16:0] EX_Buff_3_wire = EX_Buff3;
+  wire [18:0] EX_Buff_3_wire = EX_Buff3;
   //########################################
   wire [15:0] EX_Buff_4_wire;
   wire [15:0] EX_Buff_5_wire;
@@ -75,7 +78,7 @@ module CPU(Clk, Rst);
   wire [15:0] MEM_Buff_1_wire = MEM_Buff[1];
   wire [15:0] MEM_Buff_2_wire = MEM_Buff[2];
   //########################################
-  wire [16:0] MEM_Buff_3_wire = MEM_Buff3;
+  wire [18:0] MEM_Buff_3_wire = MEM_Buff3;
   //########################################
   wire [15:0] MEM_Buff_4_wire = MEM_Buff[4];
   wire [15:0] MEM_Buff_5_wire = MEM_Buff[5];
@@ -86,7 +89,7 @@ module CPU(Clk, Rst);
   wire [15:0] MEM_Buff_10_wire;
   wire [15:0] MEM_Buff_11_wire;
   
-  wire [15:0] MuxOut [0:13];
+  wire [15:0] MuxOut [0:15];
   wire [15:0] AddOut;
   wire [15:0] LHBOut;
   wire        PCctrl;
@@ -107,8 +110,16 @@ module CPU(Clk, Rst);
   assign MuxOut[9] = IF_Buff_3_wire[9] ? EX_Buff[1] : MuxOut[0];
   assign MuxOut[10] = MEM_Buff_3_wire[10] ? LHBOut : MEM_Buff[10];
   assign MuxOut[11] = ID_Buff_3_wire[11] ? ID_Buff[0][3:0] : MuxOut[5];
-  assign MuxOut[12] = ID_Buff_3_wire[12] ? EX_Buff_10_wire : ID_Buff_4_wire;
-  assign MuxOut[13] = ID_Buff_3_wire[13] ? EX_Buff_10_wire : ID_Buff_5_wire;
+  
+  /*
+    forwarding
+  */
+  //from ALU_out to ALU_in
+  assign MuxOut[12] = ID_Buff_3_wire[12] ? EX_Buff_10_wire : MuxOut[14];
+  assign MuxOut[13] = ID_Buff_3_wire[13] ? EX_Buff_10_wire : MuxOut[15];
+  //from MEM_out to ALU_in
+  assign MuxOut[14] = ID_Buff_3_wire[14] ? MEM_Buff_11_wire : ID_Buff_4_wire;
+  assign MuxOut[15] = ID_Buff_3_wire[15] ? MEM_Buff_11_wire : ID_Buff_5_wire;
   
   //Identify EXEC Next stage
   //assign IF_Buff_3_wire[9] = (EX_Buff[0][15:12]==4'hf)?1:0;
@@ -138,17 +149,18 @@ module CPU(Clk, Rst);
   control A2(.OpCode(IF_Buff_0_wire[15:12]),
              .Cond(IF_Buff_0_wire[10:8]),
              .Flag(EX_Buff_9_wire[2:0]), 
-             .EXECTest(EX_Buff_0_wire[15:12]),
              .LastInstr(ID_Buff_0_wire),
+             .Last2Instr(EX_Buff_0_wire),
              .AddrRd(IF_Buff_0_wire[11:8]),
              .AddrRs(IF_Buff_0_wire[7:4]),
              .AddrRt(IF_Buff_0_wire[3:0]),
              .LastPCctrl(PCctrl_Buff_wire),
              .ALUOp(IF_Buff_2_wire[2:0]),
-             .WriteEn(IF_Buff_3_wire[16]), 
-             .MemEnab(IF_Buff_3_wire[14]),
-             .MemWrite(IF_Buff_3_wire[15]),
-             .Signal(IF_Buff_3_wire[13:0]),
+             .WriteEn(IF_Buff_3_wire[18]), 
+             .MemEnab(IF_Buff_3_wire[16]),
+             .MemWrite(IF_Buff_3_wire[17]),
+             .Signal(IF_Buff_3_wire[15
+             :0]),
              .PCctrl(PCctrl),
              .PChold(PChold));
   
@@ -156,7 +168,7 @@ module CPU(Clk, Rst);
               .RAddr2(MuxOut[8][3:0]),
               .WAddr(MuxOut[3][3:0]), 
               .WData(MuxOut[7]), 
-              .Wen(MEM_Buff_3_wire[16]),
+              .Wen(MEM_Buff_3_wire[18]),
               .Clock(Clk),
               .Reset(Rst),
               .RData1(ID_Buff_4_wire),
@@ -187,7 +199,7 @@ module CPU(Clk, Rst);
               .data_out(MEM_Buff_11_wire), 
               .clk(Clk), 
               .rst(Rst),
-              .write_en(EX_Buff_3_wire[15]));
+              .write_en(EX_Buff_3_wire[17]));
   
   always@(posedge Clk) begin
     
@@ -216,7 +228,6 @@ module CPU(Clk, Rst);
       //#########################
       for (i = 0; i <= 2; i = i+1)
         EX_Buff[i] <=  ID_Buff[i];
-      
       EX_Buff3 <= ID_Buff_3_wire;
       EX_Buff[4] <= ID_Buff_4_wire;
       EX_Buff[5] <= ID_Buff_5_wire;
