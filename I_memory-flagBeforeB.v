@@ -4,7 +4,8 @@ module I_memory(input [`MEM_SPACE-1:0]  address, // address input
                 output reg [`ISIZE-1:0] data_out, // data output
                 input                   clk,
                 input                   rst,
-                input                   PCctrl, PChold
+                input                   PCctrl,
+                input                   PChold
                 );
   reg [`ISIZE-1:0]                      memory [0:2**`MEM_SPACE];
   reg [8*`MAX_LINE_LENGTH:0]            line; /* Line of text read from file */
@@ -47,7 +48,7 @@ module I_memory(input [`MEM_SPACE-1:0]  address, // address input
         begin
           //If currently is a stall
           //  fetch NOP
-          if (PCctrl == 1'b0) begin
+          if (PCctrl == 1'b0 || PChold) begin
             data_out <= memory[realAddress];
           end else begin
             data_out <= 16'b0;
