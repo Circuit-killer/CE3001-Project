@@ -8,7 +8,7 @@ module CPU_tb;
   initial
   begin
     Clk = 1'd0; Rst = 1'd0;
-    #20 Rst = 1'd1;
+    #30 Rst = 1'd1;
     #100000;
     $finish;
   end

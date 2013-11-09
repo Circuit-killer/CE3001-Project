@@ -21,7 +21,7 @@ module D_memory(
           while(!$feof(D_init))
             begin
               c = $fgetc(D_init);
-	            // check for comment
+	          // check for comment
               if (c == "/" | c == "#" | c == "%")
                 r = $fgets(line, D_init);
               else begin
@@ -40,8 +40,8 @@ module D_memory(
         end
       else
         begin
-          if (!write_en)
-            begin            // active-low write enable
+          if (write_en)
+            begin            // active-high write enable
               memory[address] <= data_in;
             end
           data_out <= memory[address];

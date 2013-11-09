@@ -27,13 +27,12 @@ module I_memory(
               // check for comment
               if (c == "/" | c == "#" | c == "%")
                 r = $fgets(line, I_init);
-              else
-                begin
-                  // Push the character back to the file then read the next time
-                  r = $ungetc(c, I_init);
-                  r = $fscanf(I_init, "%h", memory[addr_inc]);
-                  addr_inc = addr_inc + 1;
-                end
+              else begin
+                // Push the character back to the file then read the next time
+                r = $ungetc(c, I_init);
+                r = $fscanf(I_init, "%h", memory[addr_inc]);
+                addr_inc = addr_inc + 1;
+              end
             end
           $fclose(I_init);
           for (i = addr_inc - 1; i < 2 ** `MEM_SPACE; i = i + 1)

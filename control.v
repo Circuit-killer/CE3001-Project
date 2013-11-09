@@ -106,14 +106,14 @@ module control(OpCode,
     
     //Control Signal generating
     case (OpCode)
-      
+
       // ADD
       4'b0000: begin
         Signal[11:0] = 12'b0000_0011_0110;
         ALUOp    = 3'b000;
         WriteEn  = 1'b1;
         MemEnab  = 1'b0;
-        MemWrite = 1'b1;
+        MemWrite = 1'b0;
       end
       //SUB
       4'b0001: begin
@@ -121,7 +121,7 @@ module control(OpCode,
         ALUOp    = 3'b001;
         WriteEn  = 1'b1;
         MemEnab  = 1'b0;
-        MemWrite = 1'b1;
+        MemWrite = 1'b0;
       end             
       //AND         
       4'b0010: begin
@@ -129,7 +129,7 @@ module control(OpCode,
         ALUOp    = 3'b010;
         WriteEn  = 1'b1;
         MemEnab  = 1'b0;
-        MemWrite = 1'b1;
+        MemWrite = 1'b0;
       end
       //OR        
       4'b0011: begin
@@ -137,7 +137,7 @@ module control(OpCode,
         ALUOp    = 3'b011;
         WriteEn  = 1'b1;
         MemEnab  = 1'b0;
-        MemWrite = 1'b1;
+        MemWrite = 1'b0;
       end
       //SLL         
       4'b0100: begin
@@ -145,7 +145,7 @@ module control(OpCode,
         ALUOp    = 3'b100;
         WriteEn  = 1'b1;
         MemEnab  = 1'b0;
-        MemWrite = 1'b1;
+        MemWrite = 1'b0;
       end
       //SRL        
       4'b0101: begin
@@ -153,7 +153,7 @@ module control(OpCode,
         ALUOp    = 3'b101;
         WriteEn  = 1'b1;
         MemEnab  = 1'b0;
-        MemWrite = 1'b1;
+        MemWrite = 1'b0;
       end
       //SRA         
       4'b0110: begin
@@ -161,7 +161,7 @@ module control(OpCode,
         ALUOp    = 3'b110;
         WriteEn  = 1'b1;
         MemEnab  = 1'b0;
-        MemWrite = 1'b1;
+        MemWrite = 1'b0;
       end
       //RL
       4'b0111: begin
@@ -169,7 +169,7 @@ module control(OpCode,
         ALUOp    = 3'b111;
         WriteEn  = 1'b1;
         MemEnab  = 1'b0;
-        MemWrite = 1'b1;
+        MemWrite = 1'b0;
       end
       //LW         
       4'b1000: begin
@@ -177,7 +177,7 @@ module control(OpCode,
         ALUOp    = 3'b000;
         WriteEn  = 1'b1;
         MemEnab  = 1'b1;
-        MemWrite = 1'b1;
+        MemWrite = 1'b0;
       end
       //SW         
       4'b1001: begin
@@ -185,14 +185,14 @@ module control(OpCode,
         ALUOp    = 3'b000;
         WriteEn  = 1'b0;
         MemEnab  = 1'b1;
-        MemWrite = 1'b0;
+        MemWrite = 1'b1;
       end
       //LHB        
       4'b1010: begin
         Signal[11:0] = 12'b0101_0000_0000;
         WriteEn  = 1'b1;
         MemEnab  = 1'b0;
-        MemWrite = 1'b1;
+        MemWrite = 1'b0;
       end
       //LLB         
       4'b1011: begin
@@ -200,7 +200,7 @@ module control(OpCode,
         ALUOp    = 3'b010;
         WriteEn  = 1'b1;
         MemEnab  = 1'b0;
-        MemWrite = 1'b1;
+        MemWrite = 1'b0;
       end
       //B        
       4'b1100: begin
@@ -208,12 +208,12 @@ module control(OpCode,
           Signal[11:0] = 12'b0000_0011_0001;
           WriteEn  = 1'b0;
           MemEnab  = 1'b0;
-          MemWrite = 1'b1;
+          MemWrite = 1'b0;
         end else begin
           Signal[11:0] = 12'b0000_0011_0000;
           WriteEn  = 1'b0;
           MemEnab  = 1'b0;
-          MemWrite = 1'b1;
+          MemWrite = 1'b0;
         end
       end
       //JAL         
@@ -221,21 +221,21 @@ module control(OpCode,
         Signal[11:0] = 12'b0001_0111_1101;
         WriteEn  = 1'b1; 
         MemEnab  = 1'b0;
-        MemWrite = 1'b1;
+        MemWrite = 1'b0;
       end 
       //JR
       4'b1110: begin
         Signal[11:0] = 12'b0001_0000_0011;
         WriteEn  = 1'b0; 
         MemEnab  = 1'b0;
-        MemWrite = 1'b1;
+        MemWrite = 1'b0;
       end
       //EXEC : EXEC(Next)to be completed      
       4'b1111: begin
         Signal[11:0] = 12'b0001_0011_0111;
         WriteEn  = 1'b0;
         MemEnab  = 1'b0;
-        MemWrite = 1'b1;
+        MemWrite = 1'b0;
       end    
       
     endcase // case (OpCode)
@@ -244,7 +244,7 @@ module control(OpCode,
       Signal[11:0] = 12'b0010_0000_0000;
       WriteEn  = 1'b0;
       MemEnab  = 1'b0;
-      MemWrite = 1'b1;
+      MemWrite = 1'b0;
     end
     
     if (FwALU2Rs == 1'b1) begin

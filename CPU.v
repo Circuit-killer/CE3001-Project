@@ -14,10 +14,10 @@ module CPU(Clk, Rst);
    *|1 | CurrPC      |    16|
    *|--+-------------+------+
    *|2 | ALUOp       |     3|
-   *|3 | Signal      |(13:0)|
-   *|  | MemEnab     |  (14)|
-   *|  | MemWrite    |  (15)|
-   *|  | WriteEn     |  (16)|
+   *|3 | Signal      |(15:0)|
+   *|  | MemEnab     |  (16)|
+   *|  | MemWrite    |  (17)|
+   *|  | RFWriteEn   |  (18)|
    *+--+-------------+------+
    *|6 | Sign_Ext8   |    16|
    *|7 | Sign_Ext12  |    16|
@@ -209,9 +209,9 @@ module CPU(Clk, Rst);
   always@(posedge Clk) begin
     
     if (!Rst) begin
-      ID_Buff3 <= 16'd0;
-      EX_Buff3 <= 16'd0;
-      MEM_Buff3 <= 16'd0;
+      ID_Buff3 <= 19'd0;
+      EX_Buff3 <= 19'd0;
+      MEM_Buff3 <= 19'd0;
       for (i = 0; i <= 15; i = i+1) begin
         ID_Buff[i] <= 16'd0;
         EX_Buff[i] <= 16'd0;
