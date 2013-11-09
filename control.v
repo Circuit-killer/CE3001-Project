@@ -3,8 +3,9 @@
 module control(OpCode,
                Cond,
                Flag,
-               EXECTest,
                LastInstr,
+               Last2Instr,
+               AddrRd,
                AddrRs,
                AddrRt,
                ALUOp,
@@ -17,24 +18,31 @@ module control(OpCode,
   input [3:0]        OpCode;
   input [2:0]        Cond;
   input [2:0]        Flag;
-  input [3:0]        EXECTest;
-  input [`ISIZE-1:0] LastInstr;
-  input [`RSIZE-1:0] AddrRs, AddrRt;
+  
+  input [`ISIZE-1:0] LastInstr, Last2Instr;
+  input [`RSIZE-1:0] AddrRd, AddrRs, AddrRt;
   
   output reg         MemEnab, MemWrite, WriteEn;
   output reg [2:0]   ALUOp;
-  output reg [13:0]  Signal;
+  output reg [15:0]  Signal;
   
+  //wire [3:0]         EXECTest;  
   wire               N,V,Z;
   reg                FwALU2Rs, FwALU2Rt;
+  reg                FwMEM2Rs, FwMEM2Rt;
   reg                BS;
-  
+
   assign N = Flag[2];
   assign V = Flag[1];
   assign Z = Flag[0];
+  assign EXECTest = Last2Instr[15:12];
   
-  always @(OpCode or Cond or Flag) begin
+  
+  
+  always @(OpCode or Cond or Flag) begin    
+    
     case(Cond)
+      
       3'b000:  BS = (Z == 1)? 1'b1:1'b0; //Equal
       3'b001:  BS = (Z == 0)? 1'b1:1'b0; //Not Equal
       3'b010:  BS = (Z == 0 && N == 0)? 1'b1:1'b0; // Greater Than
@@ -44,18 +52,58 @@ module control(OpCode,
       3'b110:  BS = (V == 1)? 1'b1:1'b0;  //Overflow
       3'b111:  BS = 1'b1; // True
       default: BS = 1'b0; // False
-    endcase 
-
-    if ((OpCode < 16'd10) && (LastInstr[11:8] == AddrRs) && (AddrRs != 0)) 
-      FwALU2Rs = 1'b1;
-    else
-      FwALU2Rs = 1'b0;
+      
+    endcase // case (Cond)
     
-    if ((OpCode < 16'd5) && (LastInstr[11:8] == AddrRt) && (AddrRt != 0))
-      FwALU2Rt = 1'b1;
-    else 
-      FwALU2Rt = 1'b0;
 
+    /*
+      ALU data forwarding detect.
+      If LastInstr's Rd is this Instr's Rs
+    */
+    if ((OpCode < 4'd10) && (LastInstr[11:8] == AddrRs) && (AddrRs != 0)) begin
+      FwALU2Rs = 1'b1;
+    end else begin
+      FwALU2Rs = 1'b0;
+      //$display("Opcode = %b, LastInstr[11:8] = %h, Rs = %h, Rd = %h", OpCode, LastInstr[11:8], AddrRs, AddrRd);
+    end
+
+    /*
+      ALU data forwarding detect.
+      If LastInstr's Rd is this Instr's Rt
+        OR EXEC/JR(take Rd as RData2)
+    */
+    if (((OpCode < 4'd5) && (LastInstr[11:8] == AddrRt) && (AddrRt != 0)) 
+        || ((OpCode > 4'b1101) && (LastInstr[11:8] == AddrRd))) begin
+      FwALU2Rt = 1'b1;
+    end else begin
+      FwALU2Rt = 1'b0;
+    end
+    
+    /*
+      MEM data forwarding detect.
+      If Last2Instr's Rd is this Instr's Rs  
+    */
+    if ((OpCode < 4'd10) && (Last2Instr[11:8] == AddrRs) && (AddrRs != 0)) begin
+      FwMEM2Rs = 1'b1;
+    end else begin
+      FwMEM2Rs = 1'b0;
+      //$display("Opcode = %b, Last2Instr = %h, Rs = %h", OpCode, Last2Instr, AddrRs);
+    end
+
+    /*
+      MEM data forwarding detect.
+      If Last2Instr's Rd is this Instr's Rt
+        OR EXEC/JR(take Rd as RData2)
+    */
+    if (((OpCode < 4'd5) && (Last2Instr[11:8] == AddrRt) && (AddrRt != 0)) 
+        || ((OpCode > 4'b1101) && (Last2Instr[11:8] == AddrRd) && (AddrRd != 0))) begin
+      FwMEM2Rt = 1'b1;
+    end else begin
+      FwMEM2Rt = 1'b0;
+      //$display("Opcode = %b, Last2Instr = %h, Rt = %h", OpCode, Last2Instr, AddrRt);
+    end
+    
+    //Control Signal generating
     case (OpCode)
       
       // ADD
@@ -174,9 +222,9 @@ module control(OpCode,
         MemEnab  = 1'b0;
         MemWrite = 1'b1;
       end 
-      //JR         
+      //JR
       4'b1110: begin
-        Signal[11:0] = 12'b0001_0111_1111;
+        Signal[11:0] = 12'b0001_0000_0011;
         WriteEn  = 1'b0; 
         MemEnab  = 1'b0;
         MemWrite = 1'b1;
@@ -187,16 +235,17 @@ module control(OpCode,
         WriteEn  = 1'b0;
         MemEnab  = 1'b0;
         MemWrite = 1'b1;
-      end
-     
-    endcase
-    
-    if (EXECTest == 4'hf) begin
+      end    
+      
+    endcase // case (OpCode)
+        
+    if (EXECTest == 4'hf) begin //EXEC test
       Signal[11:0] = 12'b0010_0000_0000;
       WriteEn  = 1'b0;
       MemEnab  = 1'b0;
       MemWrite = 1'b1;
     end
+    
     if (FwALU2Rs == 1'b1) begin
       Signal[12] = 1'b1;
     end else begin
@@ -207,5 +256,17 @@ module control(OpCode,
     end else begin
       Signal[13] = 1'b0;
     end
+    
+    if (FwMEM2Rs == 1'b1) begin
+      Signal[14] = 1'b1;
+    end else begin
+      Signal[14] = 1'b0;
+    end
+    if (FwMEM2Rt == 1'b1) begin
+      Signal[15] = 1'b1;
+    end else begin
+      Signal[15] = 1'b0;
+    end
+    
   end
 endmodule // control

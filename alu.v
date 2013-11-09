@@ -38,7 +38,7 @@ module alu(
       flag[1] <= v;
       flag[2] <= n;
     end else begin
-      flag <= lastFlag;
+      //flag <= lastFlag;
     end
   end
   //assign out = tmpOut;
