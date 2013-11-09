@@ -83,7 +83,7 @@ module control(OpCode,
       MEM data forwarding detect.
       If Last2Instr's Rd is this Instr's Rs  
     */
-    if ((OpCode < 4'd10) && (Last2Instr[11:8] == AddrRs) && (AddrRs != 0)) begin
+    if ((OpCode < 4'd8) && (Last2Instr[11:8] == AddrRs) && (AddrRs != 0)) begin
       FwMEM2Rs = 1'b1;
     end else begin
       FwMEM2Rs = 1'b0;
@@ -96,7 +96,8 @@ module control(OpCode,
         OR EXEC/JR(take Rd as RData2)
     */
     if (((OpCode < 4'd5) && (Last2Instr[11:8] == AddrRt) && (AddrRt != 0)) 
-        || ((OpCode > 4'b1101) && (Last2Instr[11:8] == AddrRd) && (AddrRd != 0))) begin
+        || ((OpCode > 4'b1101) && (Last2Instr[11:8] == AddrRd) && (AddrRd != 0))
+        || (OpCode == 4'd8 || OpCode == 4'd9) && (Last2Instr[11:8] == AddrRd)) begin
       FwMEM2Rt = 1'b1;
     end else begin
       FwMEM2Rt = 1'b0;
