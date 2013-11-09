@@ -118,9 +118,10 @@ module CPU(Clk, Rst);
   //from ALU_out to ALU_in
   assign MuxOut[12] = ID_Buff_3_wire[12] ? EX_Buff_10_wire : MuxOut[14];
   assign MuxOut[13] = ID_Buff_3_wire[13] ? EX_Buff_10_wire : MuxOut[15];
-  //from MEM_out to ALU_in
-  assign MuxOut[14] = ID_Buff_3_wire[14] ? MEM_Buff_11_wire : ID_Buff_4_wire;
-  assign MuxOut[15] = ID_Buff_3_wire[15] ? MEM_Buff_11_wire : ID_Buff_5_wire;
+  //from MEM_out || ALU_out to ALU_in
+  
+  assign MuxOut[14] = ID_Buff_3_wire[14] ? MuxOut[7] : ID_Buff_4_wire;
+  assign MuxOut[15] = ID_Buff_3_wire[15] ? MuxOut[7] : ID_Buff_5_wire;
   
   //Identify EXEC Next stage
   //assign IF_Buff_3_wire[9] = (EX_Buff[0][15:12]==4'hf)?1:0;
