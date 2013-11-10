@@ -4,6 +4,7 @@ module alu(
            input signed [`DSIZE - 1:0] A, B,
            input [2:0]                 op,
            input [2:0]                 lastFlag,
+           input                       FlagEn,
            input [3:0]                 imm,
            input                       clk,
            output reg [`DSIZE - 1:0]   out,
@@ -33,12 +34,12 @@ module alu(
   end
   always @(posedge clk) begin
     out <= tmpOut;
-    if (op < 4) begin
+    if (op < 4 && FlagEn == 1'b1) begin
       flag[0] <= z;
       flag[1] <= v;
       flag[2] <= n;
     end else begin
-      //flag <= lastFlag;
+      flag <= lastFlag;
     end
   end
   //assign out = tmpOut;

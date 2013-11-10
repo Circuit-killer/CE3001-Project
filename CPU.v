@@ -18,6 +18,7 @@ module CPU(Clk, Rst);
    *|  | MemEnab     |  (16)|
    *|  | MemWrite    |  (17)|
    *|  | RFWriteEn   |  (18)|
+   *|4 | Flag_En     |     1|
    *+--+-------------+------+
    *|6 | Sign_Ext8   |    16|
    *|7 | Sign_Ext12  |    16|
@@ -42,13 +43,13 @@ module CPU(Clk, Rst);
   reg [18:0] EX_Buff3;
   reg [15:0] MEM_Buff [0:15];
   reg [18:0] MEM_Buff3;
-    
-  //reg [15:0] Spec_Addr_Reg;
+  reg        Flag_En_Buff;
+  
   wire [15:0] IF_Buff_0_wire;
   wire [15:0] IF_Buff_1_wire;
   wire [2:0]  IF_Buff_2_wire;
   wire [18:0] IF_Buff_3_wire;
-  
+    
   wire [15:0] ID_Buff_0_wire = ID_Buff[0];
   wire [15:0] ID_Buff_1_wire = ID_Buff[1];
   wire [15:0] ID_Buff_2_wire = ID_Buff[2];
@@ -59,7 +60,7 @@ module CPU(Clk, Rst);
   wire [15:0] ID_Buff_5_wire;
   wire [15:0] ID_Buff_6_wire = ID_Buff[6];
   wire [15:0] ID_Buff_7_wire = ID_Buff[7];
-  
+    
   wire [15:0] EX_Buff_0_wire = EX_Buff[0];
   wire [15:0] EX_Buff_1_wire = EX_Buff[1];
   wire [15:0] EX_Buff_2_wire = EX_Buff[2];
@@ -93,6 +94,9 @@ module CPU(Clk, Rst);
   wire [15:0] Next_PC_wire;
   wire PC_En_wire;
   wire instr_sel_wire;
+  
+  wire Flag_En_wire;
+  wire Flag_En_Buff_wire = Flag_En_Buff;
   
   wire [15:0] MuxOut [0:15];
   wire [15:0] AddOut;
@@ -128,17 +132,17 @@ module CPU(Clk, Rst);
   
   //Implement addition logic
   //##############################################
-  assign AddOut = ID_Buff_1_wire + MuxOut[2] + 1;//added a +1;
+  assign AddOut = ID_Buff_1_wire + MuxOut[2] + 1;//add from PC +1;
   //##############################################
   
   //Implement LHB or logic
   assign LHBOut = {MEM_Buff[6][7:0], MEM_Buff[5][7:0]};
   
-  assign IF_Buff_0_wire = instr_sel_wire? 16'h7000: instr_wire;
+  assign IF_Buff_0_wire = instr_sel_wire? 16'h7000: instr_wire; //7000 is NOP
   assign IF_Buff_1_wire = PC_En_wire? Next_PC_wire: Next_PC_wire-1;
-  //Module Instantiation
+  
   /**********Instruction Fectch**********/
-  I_memory A0(.address(MuxOut[9]),  //.address(IF_Buff_1_wire), -> wrong
+  I_memory A0(.address(MuxOut[9]),
               .data_out(instr_wire),
               .clk(Clk),
               .rst(Rst));
@@ -166,8 +170,8 @@ module CPU(Clk, Rst);
              .WriteEn(IF_Buff_3_wire[18]), 
              .MemEnab(IF_Buff_3_wire[16]),
              .MemWrite(IF_Buff_3_wire[17]),
-             .Signal(IF_Buff_3_wire[15:0])
-             );
+             .Signal(IF_Buff_3_wire[15:0]),
+             .FlagEn(Flag_En_wire));//put FlagEn_wire to flag Buffer
   
   Reg_File A3(.RAddr1(IF_Buff_0_wire[7:4]),
               .RAddr2(MuxOut[8][3:0]),
@@ -193,11 +197,12 @@ module CPU(Clk, Rst);
          .B(MuxOut[11]),
          .op(ID_Buff_2_wire[2:0]),
          .lastFlag(EX_Buff_9_wire[2:0]), 
+         .FlagEn(Flag_En_Buff_wire), //use the output of Buffer
          .imm(ID_Buff_0_wire[3:0]),
          .clk(Clk),
          .out(EX_Buff_10_wire),
          .flag(EX_Buff_9_wire[2:0]));
-  
+ 
   /**********Memory Access************/
   D_memory A5(.address(EX_Buff_10_wire),
               .data_in(EX_Buff_8_wire),
@@ -212,12 +217,12 @@ module CPU(Clk, Rst);
       ID_Buff3 <= 19'd0;
       EX_Buff3 <= 19'd0;
       MEM_Buff3 <= 19'd0;
+      Flag_En_Buff <= 1'b0;
       for (i = 0; i <= 15; i = i+1) begin
         ID_Buff[i] <= 16'd0;
         EX_Buff[i] <= 16'd0;
         MEM_Buff[i] <= 16'd0;
       end
-      //Spec_Addr_Reg <= 16'd0;
     end else begin
       //#########################
       //### IF -> ID
@@ -226,7 +231,10 @@ module CPU(Clk, Rst);
       ID_Buff[0] <= IF_Buff_0_wire;
       ID_Buff[1] <= IF_Buff_1_wire;
       ID_Buff[2] <= IF_Buff_2_wire;
+      
       ID_Buff3 <= IF_Buff_3_wire;
+      Flag_En_Buff <= Flag_En_wire;
+      
       //#########################
       //### ID -> EX
       //#########################
