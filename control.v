@@ -55,13 +55,27 @@ module control(OpCode,
       default: BS = 1'b0; // False
       
     endcase // case (Cond)
-    
+
 
     /*
-     ALU data forwarding detect.
-     If LastInstr's Rd is this Instr's Rs
+     LastInstr can forward Data only and only if 
+     ADD, SUB, AND, OR
+     SLL, SRL, SRA, RL
+     LW
+     LHB, LLB
+     ========= LastInstr[15:12] <= `LLB && LastInstr[15:12] != `SW
+     JAL
      */
-    if ((OpCode < 4'd10) && (LastInstr[11:8] == AddrRs) && (AddrRs != 0)) begin
+    wire canForward1 = (LastInstr[15:12] <= `LLB && LastInstr[15:12] != `SW) ? 1 : 0;
+    wire canForward2 = (Last2Instr[15:12] <= `LLB && Last2Instr[15:12] != `SW) ? 1 : 0;
+    
+    /*
+     ALU data forwarding detect. -> RData1
+     LastInstr's Rd to this Instr's Rs
+     JAL's R15      to this Instr's Rs
+     */
+    if ((OpCode <= `SW) && (canForward1 == 1'b1 && (LastInstr[11:8] == AddrRs) && (AddrRs != 0)
+                            || (LastInstr[15:12] == `JAL) && (4'd15 == AddrRs))) begin
       FwALU2Rs = 1'b1;
     end else begin
       FwALU2Rs = 1'b0;
@@ -69,22 +83,33 @@ module control(OpCode,
     end
     
     /*
-     ALU data forwarding detect.
-     If LastInstr's Rd is this Instr's Rt
-     OR EXEC/JR(take Rd as RData2)
+     ALU data forwarding detect. -> RData2
+     
+     LastInstr's Rd to this Instr's Rt     OpCode <= 4
+     EXEC/JR(take Rd as RData2)            OpCode >= E
+     SW take LastInstr's Rd as Rd          OpCode == 9
+     LHB/LLB take LastInstr's Rd as Rd     OpCode == 10/OpCode == 11
      */
-    if (((OpCode < 4'd5) && (LastInstr[11:8] == AddrRt) && (AddrRt != 0)) 
-        || ((OpCode > 4'b1101) && (LastInstr[11:8] == AddrRd))) begin
+    if ((canForward1 == 1'b1)
+        && ((OpCode <= 4'd4 && LastInstr[11:8] == AddrRt && AddrRt != 0)
+            || ((OpCode >= `JR || OpCode >= `SW && OpCode <= `LLB) && (LastInstr[11:8] == AddrRd) && (AddrRd != 0)))) begin
       FwALU2Rt = 1'b1;
     end else begin
       FwALU2Rt = 1'b0;
     end
+    if ((LastInstr[15:12] == `JAL)
+      && ((OpCode <= 4'd4 && 4'd15 == AddrRt)
+          || ((OpCode >= `JR || OpCode >= `SW && OpCode <= `LLB) && (4'd15 == AddrRd)))) begin
+      FwALU2Rt = 1'b1;
+    end
     
     /*
      MEM data forwarding detect.
-     If Last2Instr's Rd is this Instr's Rs  
+     Last2Instr's Rd to this Instr's Rs
+     JAL R15         to this Instr's Rs  
     */
-    if ((OpCode < 4'd10) && (Last2Instr[11:8] == AddrRs) && (AddrRs != 0)) begin
+    if ((OpCode < `SW) && ((canForward2 == 1'b1) && (Last2Instr[11:8] == AddrRs) && (AddrRs != 0)
+                           || (Last2Instr[15:12] == `JAL) && (4'd15 == AddrRs))) begin
       FwMEM2Rs = 1'b1;
     end else begin
       FwMEM2Rs = 1'b0;
@@ -93,18 +118,25 @@ module control(OpCode,
     
     /*
      MEM data forwarding detect.
-     Last2Instr's Rd is this Instr's Rt OpCode <= 4
+
+     Last2Instr's Rd to this Instr's Rt OpCode <= 4
      EXEC/JR(take Rd as RData2)         OpCode >= E
-     LW take Last2Instr's Rd as Rd      OpCode == 9
+     SW take Last2Instr's Rd as Rd      OpCode == 9
+     LHB/LLB take Last2Instr's Rd as Rd OpCode == 10/OpCode == 11
      */
-    if (((OpCode < 4'd5) && (Last2Instr[11:8] == AddrRt) && (AddrRt != 0)) 
-        || ((OpCode > 4'b1101 || OpCode == 4'd9) && (Last2Instr[11:8] == AddrRd) && (AddrRd != 0))) begin
+    if ((canForward2 == 1'b1)
+        && ((OpCode <= 4'd4 && Last2Instr[11:8] == AddrRt && AddRt != 0)
+            || ((OpCode >= `JR || OpCode >= `SW && OpCode <= `LLB) && (Last2Instr[11:8] == AddrRd) && (AddRd != 0)))) begin
       FwMEM2Rt = 1'b1;
     end else begin
       FwMEM2Rt = 1'b0;
       //$display("Opcode = %b, Last2Instr = %h, Rt = %h", OpCode, Last2Instr, AddrRt);
     end
-    
+    if ((Last2Instr[15:12] == `JAL)
+        && ((OpCode <= 4'd4 && 4'd15 == AddrRt)
+            || ((OpCode >= `JR || OpCode >= `SW && OpCode <= `LLB) && (4'd15 == AddrRd)))) begin
+      FwMEM2Rt = 1'b0;
+    end
     //Control Signal generating
     case (OpCode)
       

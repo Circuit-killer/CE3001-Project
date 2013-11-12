@@ -109,19 +109,21 @@ module CPU(Clk, Rst);
   assign MuxOut[3][3:0] = MEM_Buff_3_wire[3] ? 16'd15 : MEM_Buff[0][11:8];
   assign MuxOut[4] = ID_Buff_3_wire[4] ? MuxOut[12] : ID_Buff[6];
   assign MuxOut[5] = ID_Buff_3_wire[5] ? MuxOut[13] : ID_Buff[6];
-  assign MuxOut[6] = MEM_Buff_3_wire[6] ? MEM_Buff[1] : MuxOut[10];  
+  assign MuxOut[6] = EX_Buff_3_wire[6] ? MEM_Buff[1] : MuxOut[10];//used to be MEM
   assign MuxOut[7] = MEM_Buff_3_wire[7] ? MEM_Buff_11_wire : MuxOut[6];
   assign MuxOut[8][3:0] = IF_Buff_3_wire[8] ? IF_Buff_0_wire[11:8] : IF_Buff_0_wire[3:0];
   assign MuxOut[9] = IF_Buff_3_wire[9] ? EX_Buff[1] : MuxOut[0];
-  assign MuxOut[10] = MEM_Buff_3_wire[10] ? LHBOut : MEM_Buff[10];
+  assign MuxOut[10] = EX_Buff_3_wire[10] ? LHBOut : MEM_Buff[10];//used to be MEM
   assign MuxOut[11] = ID_Buff_3_wire[11] ? ID_Buff[0][3:0] : MuxOut[5];
   
   /*
     forwarding
   */
   //from ALU_out to ALU_in
-  assign MuxOut[12] = ID_Buff_3_wire[12] ? EX_Buff_10_wire : MuxOut[14];
-  assign MuxOut[13] = ID_Buff_3_wire[13] ? EX_Buff_10_wire : MuxOut[15];
+  //assign MuxOut[12] = ID_Buff_3_wire[12] ? EX_Buff_10_wire : MuxOut[14];
+  //assign MuxOut[13] = ID_Buff_3_wire[13] ? EX_Buff_10_wire : MuxOut[15];
+  assign MuxOut[12] = ID_Buff_3_wire[12] ? MuxOut[6] : MuxOut[14];//select PC+1/ALUOut/SignExt
+  assign MuxOut[13] = ID_Buff_3_wire[13] ? MuxOut[6] : MuxOut[15];//select PC+1/ALUOut/SignExt
   //from MEM_out || ALU_out to ALU_in
   
   assign MuxOut[14] = ID_Buff_3_wire[14] ? MuxOut[7] : ID_Buff_4_wire;
