@@ -1,0 +1,22 @@
+//EXEC test case
+8001 //check R0
+8101
+8404 //4
+860A //10
+8EF1 //-1
+F688 //exec instruction at address specified by 6, which is 10 
+0624 //10+4
+7000
+7000
+7000
+F688
+1EE1 //-1-1
+0EE1 //-1+1
+0EE1 //-1+1, don't change PC
+D101//change PC
+1EE1 //-1-1
+0EE1 //-1+1
+9EF8
+
+
+//with data hazard

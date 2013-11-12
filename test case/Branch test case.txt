@@ -1,0 +1,157 @@
+//Branch test case
+//For Branch
+//000 Equal (Z=1)
+//001 Not Equal (Z=0)
+//010 Greater Than (Z=N=0)
+//011 Less Than (N=1)
+//100 Greater or Equal (Z=1 or Z=N=0)
+//101 Less or Equal (N=1 or Z=1)
+//110 Overflow (V=1)
+//111 True
+
+//ADD
+//8001 //check R0
+//8101
+//8202
+//8DF3
+//8EF4
+//8FF1 
+//04F1 //update Z
+//05E1 // not overflow
+//06E2 //update v, not N
+//07D1 //update N
+//94F5
+//95F6
+//96F7
+//97F8
+
+//SUB
+//8101
+//8202
+//8303
+//8403
+//8DF5
+//8EF2
+//8FF1 
+//1443 //update Z
+//15D1 // not overflow,update N
+//16D2 //update v, not N
+//94F6
+//95F7
+//96F8
+
+
+//AND
+
+//81F6 //load 0000 1111 0000 1111
+//82F7 //load 0000 0000 1111 1111
+//2312 // flag Z=v=N=0
+//93F8
+
+//OR
+
+//81F6 //load 0000 1111 0000 1111
+//82F7 //load 0000 0000 1111 1111
+//3312 // flag Z=v=N=0
+//93F8
+
+
+
+
+
+
+
+
+
+
+//unsuccessful branches-branch unsuccessful,update flag, branch successful-branch unsuccessful,update flag, branch successful-branch unsuccessful,update flag, branch successful
+8001 //check R0
+//initialize register file
+8101
+8202
+8303
+8403
+8DF5
+8EF2
+8FF1
+
+//unsuccessful branches when flags are not set yet. 
+C009
+C109
+C209
+C309
+C409
+C509
+C609
+
+C701 //successful branch
+1732
+C001 
+1443 //update Z
+C001
+0712
+
+15D1 // not overflow,update N
+16D2 //update v, not N
+
+
+//04F1 //update Z
+//05E1 // not overflow
+//06E2 //update v, not N
+//07D1 //update N
+
+
+
+C1
+C1
+
+C2
+C2
+
+C3
+C3
+
+C4
+C4
+
+C5
+C5
+
+C6
+C6
+
+C7
+C7
+
+
+
+
+
+
+
+
+
+//with data hazard
+0000
+0132
+C101
+0000
+C102
+1132
+C2FD
+C2
+
+C3
+C3
+
+C4
+C4
+
+C5
+C5
+
+C6
+C6
+
+C7
+C7

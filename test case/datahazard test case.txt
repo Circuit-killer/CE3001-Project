@@ -1,0 +1,70 @@
+//data hazard----Read after write
+8101
+8404 //4
+860A //10
+8EF1 //-1
+F688 //exec instruction at address specified by 6, which is 10 
+0624 //10+4
+7000
+7000
+7000
+F688
+1EF1 //-1-1
+
+
+
+
+
+//ID/EX.WriteRegister (Rd) = IF/ID.ReadRegister1 (Rs)
+
+
+0FF1 //-1+1
+0EF1 //-1+1
+
+
+
+
+
+
+//ID/EX.WriteRegister (Rd) = IF/ID.ReadRegister2 (Rt)
+
+0F1F //-1+1
+0E1F //-1+1
+
+
+
+
+//EX/MEM.WriteRegister = IF/ID.ReadRegister1 
+
+
+0FF1 //-1+1
+7000
+0EF1 //-1+1
+
+
+//EX/MEM.WriteRegister = IF/ID.ReadRegister2
+
+
+
+0F1F //-1+1
+7000
+0E1F //-1+1
+
+
+
+//MEM/WB.WriteRegister = IF/ID.ReadRegister1
+
+
+
+0FF1 //-1+1
+7000
+7000
+0EF1 //-1+1
+
+
+
+//MEM/WB.WriteRegister = IF/ID.ReadRegister2
+0F1F //-1+1
+7000
+7000
+0E1F //-1+1

@@ -1,0 +1,36 @@
+//AND test case
+8001 //check R0
+81F6 //load 0000 1111 0000 1111
+82F7 //load 0000 0000 1111 1111
+2312
+
+
+
+//with data hazard
+
+
+//ID/EX.WriteRegister (Rd) = IF/ID.ReadRegister1 (Rs)
+
+
+
+//ID/EX.WriteRegister (Rd) = IF/ID.ReadRegister2 (Rt)
+
+
+
+//EX/MEM.WriteRegister = IF/ID.ReadRegister1 
+
+
+
+//EX/MEM.WriteRegister = IF/ID.ReadRegister2
+
+
+
+//MEM/WB.WriteRegister = IF/ID.ReadRegister1
+
+
+
+//MEM/WB.WriteRegister = IF/ID.ReadRegister2
+
+
+
+93F8

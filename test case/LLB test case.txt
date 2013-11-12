@@ -1,0 +1,8 @@
+//LLB load with immediate value
+A001 //check R0
+A1AB
+A21B
+91F8
+92F9
+
+//with data hazard

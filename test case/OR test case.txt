@@ -1,0 +1,9 @@
+//OR test case
+8001 //check R0
+81F6 //load 0000 1111 0000 1111
+82F7 //load 0000 0000 1111 1111
+3312 
+93F8
+
+
+//with data hazard

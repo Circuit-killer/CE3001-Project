@@ -1,0 +1,8 @@
+//LW test case
+8001 //check R0
+810F
+91F8
+
+
+//with data hazard
+// load IF ID EXE MEM WB 5 stage

@@ -1,0 +1,9 @@
+//SRL test case
+//`SRL: tmpOut = A >> imm;
+8001 //check R0
+81F6 //load 0000 1111 0000 1111
+5214
+92F8
+
+
+//with data hazard
