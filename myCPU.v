@@ -21,6 +21,7 @@ module CPU(clk, Rst);
    *+--+-------------+------+
    *|6 | Sign_Ext8   |    16|
    *|7 | Sign_Ext12  |    16|
+   *|12| Zero_Ext4   |    16|
    *+==+==Execute====+======+
    *|4 | RData1      |    16|
    *|5 | RData2      |    16|
@@ -35,11 +36,11 @@ module CPU(clk, Rst);
    ******************************************/
   
   integer i;
-  reg [15:0] ID_Buff [0:15];
+  reg [15:0] ID_Buff [0:12];
   reg [17:0] ID_Buff3;
-  reg [15:0] EX_Buff [0:15];
+  reg [15:0] EX_Buff [0:12];
   reg [17:0] EX_Buff3;
-  reg [15:0] MEM_Buff [0:15];
+  reg [15:0] MEM_Buff [0:12];
   reg [17:0] MEM_Buff3;
   reg        Flag_En_Buff;
   
@@ -56,6 +57,7 @@ module CPU(clk, Rst);
   //########################################
   wire [15:0] ID_Buff_4_wire;
   wire [15:0] ID_Buff_5_wire;
+  wire [15:0] ID_Buff_12_wire = ID_Buff[12];
 
   wire [15:0] EX_Buff_0_wire = EX_Buff[0];
   wire [15:0] EX_Buff_1_wire = EX_Buff[1];
@@ -151,8 +153,9 @@ module CPU(clk, Rst);
               .RData1(ID_Buff_4_wire),
               .RData2(ID_Buff_5_wire));
   
-  //Sign Extend
+  //Sign Extend & Zero Extend
   always@(posedge clk) begin
+    ID_Buff[12] <= {12'b0, IF_Buff_0_wire[3:0]};
     ID_Buff[6] <= {{8{IF_Buff_0_wire[7]}}, IF_Buff_0_wire[7:0]};
     ID_Buff[7] <= {{4{IF_Buff_0_wire[11]}}, IF_Buff_0_wire[11:0]};
   end
@@ -172,7 +175,7 @@ module CPU(clk, Rst);
   end
   assign MuxOut[4] = ID_Buff_3_wire[4] ? MuxOut[12] : ID_Buff[6];
   assign MuxOut[5] = ID_Buff_3_wire[5] ? MuxOut[13] : ID_Buff[6];
-  assign MuxOut[11] = ID_Buff_3_wire[11] ? ID_Buff[0][3:0] : MuxOut[5];
+  assign MuxOut[11] = ID_Buff_3_wire[11] ? ID_Buff[12] : MuxOut[5];
   alu A4(.A(MuxOut[4]),
          .B(MuxOut[11]),
          .op(ID_Buff_2_wire[2:0]),
@@ -223,7 +226,7 @@ module CPU(clk, Rst);
       EX_Buff3 <= 19'd0;
       MEM_Buff3 <= 19'd0;
       Flag_En_Buff <= 1'b0;
-      for (i = 0; i <= 15; i = i+1) begin
+      for (i = 0; i <= 12; i = i+1) begin
         ID_Buff[i] <= 16'd0;
         EX_Buff[i] <= 16'd0;
         MEM_Buff[i] <= 16'd0;
