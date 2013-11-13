@@ -41,7 +41,8 @@ module control(OpCode,
   assign canForward1 = (LastInstr[15:12] <= `LLB && LastInstr[15:12] != `SW) ? 1 : 0;
   assign canForward2 = (Last2Instr[15:12] <= `LLB && Last2Instr[15:12] != `SW) ? 1 : 0;
   
-  always @(OpCode or Cond or Flag) begin    
+  always @(*) begin
+    
     
     case(Cond)
       
@@ -272,7 +273,7 @@ module control(OpCode,
         MemWrite = 1'b0;
         FlagEn   = 1'b0;
       end
-      //EXEC : EXEC(Next)to be completed      
+      //EXEC : EXEC(Next)to be completed
       4'b1111: begin
         Signal[11:0] = 12'b0001_0011_0111;
         ALUOp    = 3'b000;
@@ -283,14 +284,16 @@ module control(OpCode,
       
     endcase // case (OpCode)
         
-    if (EXECTest == `EXEC) begin //EXEC test
-      Signal[11:0] = 12'b0010_0000_0000;
-      ALUOp    = 3'b000;
-      WriteEn  = 1'b0;
-      MemWrite = 1'b0;
-      FlagEn   = 1'b0;
+    if (Last2Instr[15:12] == `EXEC) begin //EXEC test
+      Signal[9] = 1'b1;
+      Signal[0] = 1'b0;//not modify pc. 
+      //Do not change anything
+      // ALUOp    = 3'b000;
+      // WriteEn  = 1'b0;
+      // MemWrite = 1'b0;
+      // FlagEn   = 1'b0;
     end
-    
+
     if (FwALU2Rs == 1'b1) begin
       Signal[12] = 1'b1;
     end else begin
@@ -312,6 +315,5 @@ module control(OpCode,
     end else begin
       Signal[15] = 1'b0;
     end
-    
   end
 endmodule // control

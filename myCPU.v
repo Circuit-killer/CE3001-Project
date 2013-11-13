@@ -104,8 +104,10 @@ module CPU(clk, Rst);
         .NextPC(Next_PC_wire));
 
   //0
-  Pre_decoder B1(.LastInstr(ID_Buff_0_wire),
-                 .Instr(instr_wire),
+  Pre_decoder B1(.Instr(instr_wire),
+                 .LastInstr(ID_Buff_0_wire),
+//                 .Last2Instr(EX_Buff_0_wire),
+                 .Last3Instr(MEM_Buff_0_wire),//add last is Exec
                  .PC_En(PC_En_wire), 
                  .instr_sel(instr_sel_wire));
   //1 if PC is stopped. Add NOP -> 7000
@@ -126,6 +128,7 @@ module CPU(clk, Rst);
              .Flag(EX_Buff_9_wire[2:0]), 
              .LastInstr(ID_Buff_0_wire),
              .Last2Instr(EX_Buff_0_wire),
+             //.Last3Instr(MEM_Buff_0_wire),
              .AddrRd(IF_Buff_0_wire[11:8]),
              .AddrRs(IF_Buff_0_wire[7:4]),
              .AddrRt(IF_Buff_0_wire[3:0]),
@@ -245,8 +248,9 @@ module CPU(clk, Rst);
       //#########################
       //### ID -> EX
       //#########################
-      for (i = 0; i <= 2; i = i+1)
-        EX_Buff[i] <=  ID_Buff[i];
+      EX_Buff[0] <= ID_Buff_0_wire;
+      EX_Buff[1] <= ID_Buff_1_wire;
+      EX_Buff[2] <= ID_Buff_2_wire;
       EX_Buff[4] <= ID_Buff_4_wire;
       EX_Buff[5] <= ID_Buff_5_wire;
       EX_Buff[6] <= LHBOut;
