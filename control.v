@@ -30,6 +30,7 @@ module control(OpCode,
 
   wire [3:0]         EXECTest;
   wire               N,V,Z;
+  wire               canForward1, canForward2;
   reg                FwALU2Rs, FwALU2Rt;
   reg                FwMEM2Rs, FwMEM2Rt;
   reg                BS;
@@ -38,7 +39,8 @@ module control(OpCode,
   assign V = Flag[1];
   assign Z = Flag[0];
   assign EXECTest = Last2Instr[15:12];
-    
+  assign canForward1 = (LastInstr[15:12] <= `LLB && LastInstr[15:12] != `SW) ? 1 : 0;
+  assign canForward2 = (Last2Instr[15:12] <= `LLB && Last2Instr[15:12] != `SW) ? 1 : 0;
   
   always @(OpCode or Cond or Flag) begin    
     
@@ -66,8 +68,7 @@ module control(OpCode,
      ========= LastInstr[15:12] <= `LLB && LastInstr[15:12] != `SW
      JAL
      */
-    wire canForward1 = (LastInstr[15:12] <= `LLB && LastInstr[15:12] != `SW) ? 1 : 0;
-    wire canForward2 = (Last2Instr[15:12] <= `LLB && Last2Instr[15:12] != `SW) ? 1 : 0;
+
     
     /*
      ALU data forwarding detect. -> RData1
@@ -125,8 +126,8 @@ module control(OpCode,
      LHB/LLB take Last2Instr's Rd as Rd OpCode == 10/OpCode == 11
      */
     if ((canForward2 == 1'b1)
-        && ((OpCode <= 4'd4 && Last2Instr[11:8] == AddrRt && AddRt != 0)
-            || ((OpCode >= `JR || OpCode >= `SW && OpCode <= `LLB) && (Last2Instr[11:8] == AddrRd) && (AddRd != 0)))) begin
+        && ((OpCode <= 4'd4 && Last2Instr[11:8] == AddrRt && AddrRt != 0)
+            || ((OpCode >= `JR || OpCode >= `SW && OpCode <= `LLB) && (Last2Instr[11:8] == AddrRd) && (AddrRd != 0)))) begin
       FwMEM2Rt = 1'b1;
     end else begin
       FwMEM2Rt = 1'b0;
