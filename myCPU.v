@@ -161,7 +161,7 @@ module CPU(clk, Rst);
   end
 
   //PC Jump result
-  assign AddOut = ID_Buff_1_wire + MuxOut[2] + 1;
+  assign AddOut = ID_Buff_1_wire + MuxOut[2];
   assign MuxOut[2] = ID_Buff_3_wire[2] ? ID_Buff[7] : ID_Buff[6];
 
   assign MuxOut[1] = ID_Buff_3_wire[1] ? MuxOut[13] : AddOut;//graph is wrong

@@ -283,7 +283,7 @@ module control(OpCode,
       
     endcase // case (OpCode)
         
-    if (EXECTest == 4'hf) begin //EXEC test
+    if (EXECTest == `EXEC) begin //EXEC test
       Signal[11:0] = 12'b0010_0000_0000;
       ALUOp    = 3'b000;
       WriteEn  = 1'b0;
