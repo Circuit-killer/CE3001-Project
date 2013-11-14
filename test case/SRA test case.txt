@@ -1,8 +1,8 @@
 //SRA test case
 //`SRA: tmpOut = A >>> imm;
 8001
-8006
-8007
+8606
+8707
 816F
 827F
 4314

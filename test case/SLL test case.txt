@@ -1,7 +1,7 @@
 //SLL test case
 //`SLL: tmpOut = A << imm;
 8001
-8006
+8606
 816F
 4214
 92F8

@@ -22,7 +22,7 @@ module Pre_decoder(Instr, LastInstr, Last3Instr, PC_En, instr_sel);
         
     end
     
-    if (LastInstr[15:14] == 2'b00 && Instr[15:14] == 2'b11) begin
+    if (LastInstr[15:14] == 2'b00 && Instr[15:12] == 4'b1100) begin
     
         PC_En = 1'b0;
         instr_sel = 1'b1;
