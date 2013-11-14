@@ -2,7 +2,9 @@
 
 module I_memory(
                 input [`MEM_SPACE-1:0]  address, // address input
+                input [`ISIZE-1:0] storeInstr,
                 output reg [`ISIZE-1:0] data_out, // data output
+                output reg [`ISIZE-1:0] nextData_out,
                 input                   clk,
                 input                   rst
                 );
@@ -42,7 +44,12 @@ module I_memory(
         end
       else
         begin
-          data_out <= memory[address];
+          if (address <= 1'b1) begin
+            data_out <= memory[address];
+          end else begin
+            data_out <= storeInstr;
+          end
+          nextData_out <= memory[address + 1];
         end // else: !if(rst)
     end // always@ (posedge clk or posedge rst)
 endmodule // I_memory

@@ -1,3 +1,5 @@
+`include "define.v"
+
 module CPU(clk, Rst);
   
   input clk, Rst;
@@ -6,7 +8,7 @@ module CPU(clk, Rst);
    *Buffer value and usage
    *
    *+==+=============+======+
-   *+No+  signalName +sWidth+
+   *+No+ signal name + Width+
    *+==+===Fetch=====+======+
    *|  |             |      |
    *+==+===Decode====+======+
@@ -42,6 +44,7 @@ module CPU(clk, Rst);
   reg [17:0] EX_Buff3;
   reg [15:0] MEM_Buff [0:12];
   reg [17:0] MEM_Buff3;
+  reg [15:0] storeInstr_Buff;
   reg        Flag_En_Buff;
   
   wire [15:0] IF_Buff_0_wire;
@@ -76,9 +79,12 @@ module CPU(clk, Rst);
   wire [15:0] MEM_Buff_11_wire;
   
   wire [15:0] instr_wire;
+  wire [15:0] instr2_wire;
   wire [15:0] Next_PC_wire;
   wire PC_En_wire;
   wire instr_sel_wire;
+  wire [`ISIZE-1:0] storeInstr, toStoreInstr, outInstr;
+  wire [`ISIZE-1:0] storeInstr_Buff_wire = storeInstr_Buff;
   
   wire Flag_En_wire;
   wire Flag_En_Buff_wire = Flag_En_Buff;
@@ -94,6 +100,8 @@ module CPU(clk, Rst);
 
   //0 choose from Ex->Pc or Mux_0 
   assign MuxOut[9] = IF_Buff_3_wire[9] ? EX_Buff_1_wire : MuxOut[0];
+  //if jump then flush stored Instruction
+  assign toStoreInstr = ID_Buff_3_wire[0] ? 16'h7000 : storeInstr ;
   //1 choose from Mux_1 or NextPc
   assign MuxOut[0] = ID_Buff_3_wire[0] ? MuxOut[1] : IF_Buff_1_wire;
   //0 PC enable
@@ -104,17 +112,21 @@ module CPU(clk, Rst);
         .NextPC(Next_PC_wire));
 
   //0
-  Pre_decoder B1(.Instr(instr_wire),
+  Pre_decoder B1(.Instr(instr_wire),//this instr
+                 .Instr2(instr2_wire),//next instr
                  .LastInstr(ID_Buff_0_wire),
-//                 .Last2Instr(EX_Buff_0_wire),
                  .Last3Instr(MEM_Buff_0_wire),//add last is Exec
                  .PC_En(PC_En_wire), 
-                 .instr_sel(instr_sel_wire));
+                 .instr_sel(instr_sel_wire),
+                 .outInstr(outInstr),
+                 .storeInstr(storeInstr));
   //1 if PC is stopped. Add NOP -> 7000
-  assign IF_Buff_0_wire = instr_sel_wire? 16'h7000: instr_wire;
+  assign IF_Buff_0_wire = instr_sel_wire? 16'h7000: outInstr;
   //0 -> 1
   I_memory A0(.address(MuxOut[9]),
+              .storeInstr(toStoreInstr),
               .data_out(instr_wire),
+              .nextData_out(instr2_wire),
               .clk(clk),
               .rst(Rst));
 
@@ -229,6 +241,7 @@ module CPU(clk, Rst);
       EX_Buff3 <= 19'd0;
       MEM_Buff3 <= 19'd0;
       Flag_En_Buff <= 1'b0;
+      storeInstr_Buff <= 16'b0;
       for (i = 0; i <= 12; i = i+1) begin
         ID_Buff[i] <= 16'd0;
         EX_Buff[i] <= 16'd0;
@@ -238,7 +251,8 @@ module CPU(clk, Rst);
       //#########################
       //### IF -> ID
       //#########################
-      
+      storeInstr_Buff <= storeInstr;
+
       ID_Buff[0] <= IF_Buff_0_wire;
       ID_Buff[1] <= IF_Buff_1_wire;
       ID_Buff[2] <= IF_Buff_2_wire;
