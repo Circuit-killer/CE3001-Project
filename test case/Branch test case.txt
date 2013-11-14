@@ -1,5 +1,4 @@
-//Branch test case
-//For Branch
+
 //000 Equal (Z=1)
 //001 Not Equal (Z=0)
 //010 Greater Than (Z=N=0)

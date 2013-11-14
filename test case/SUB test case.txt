@@ -1,56 +1,33 @@
 //SUB test case
-8001 //check R0
+8001
 8101
 8202
 8303
 8403
-8DF5
-8EF2
-8FF1 
-1443 //update Z
-15D1 // not overflow,update N
-16D2 //update v, not N
-
-
-
-//with data hazard
-
-//ID/EX.WriteRegister (Rd) = IF/ID.ReadRegister1 (Rs)
-
-1FF1 //-1+1
-1EF1 //-1+1
-
-//ID/EX.WriteRegister (Rd) = IF/ID.ReadRegister2 (Rt)
-
-1F1F //-1+1
-1E1F //-1+1
-
-//EX/MEM.WriteRegister = IF/ID.ReadRegister1 
-
-1EF1 //-1+1
+8D5F
+8E2F
+8F1F 
+1443
+15D1
+16D2
+1FF1
+1EF1
+1F1F
+1E1F
+1EF1
 7000
-1EF1 //-1+1
-
-//EX/MEM.WriteRegister = IF/ID.ReadRegister2
-
-1F1F //-1+1
+1EF1
+1F1F
 7000
-1E1F //-1+1
-
-//MEM/WB.WriteRegister = IF/ID.ReadRegister1
-
-1FF1 //-1+1
+1E1F
+1FF1
 7000
 7000
-1EF1 //-1+1
-
-//MEM/WB.WriteRegister = IF/ID.ReadRegister2
-1F1F //-1+1
+1EF1
+1F1F
 7000
 7000
-1E1F //-1+1
-
-
+1E1F
 94F8
 95F9
 96FA

@@ -1,12 +1,10 @@
 //JAL test case
 //12 two's complement signed---sign extension when adding to PC+1
-8001 //check R0
+8001
 8101
-8EF1 //-1
+8E1F
 D001
-1EE1 //-1-1
-0EE1 //-1+1
+1EE1
+0EE1
 EF88
 9EF8
-
-//with data hazard

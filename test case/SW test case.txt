@@ -1,8 +1,4 @@
 //SW test case
-8001 //check R0
+8001
 810F
 91F8
-
-
-//with data hazard
-//IF ID EXE MEM  4 stage
