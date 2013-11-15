@@ -52,5 +52,3 @@ Control Signal
     S14: between RData1 and  S12;  1 means choose from MUX_7_Out; 0 means choose from RF
     S15: between RData2 and  S13;  1 means choose from MUX_7_Out; 0 means choose from RF
     MUX_7_Out is MUX_6_Out/MEM_Out
-
-    S5: SW should be x;  because if s11 is 1. 
